@@ -7,7 +7,7 @@ import re
 import datetime
 
 """Create lists to store image"""
-path = 'images file'  # file path
+path = '../images file'  # file path
 images = []
 classNames = []
 myList = os.listdir(path)  # read file in path
@@ -39,7 +39,7 @@ def findEncoding(images):
 
 """function to record attendance"""
 def recordAttendance(name):
-    with open('Attendance.csv', 'r+') as file:
+    with open('attendance.csv', 'r+') as file:
         myDataList = file.readlines()
         nameList = []
         for line in myDataList:
