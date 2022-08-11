@@ -7,7 +7,7 @@ import re
 import datetime
 
 """Create lists to store image"""
-path = '../images file'  # file path
+path = 'images file'  # file path
 images = []
 classNames = []
 myList = os.listdir(path)  # read file in path
