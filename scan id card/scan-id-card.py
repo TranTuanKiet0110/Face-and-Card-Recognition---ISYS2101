@@ -38,14 +38,22 @@ f = open('save_log.txt', 'w')
 f.write(output2)
 f.close()
 
+def recordData(school, sName, sID, exDate):
+    with open('cardData.csv', 'r+') as file:
+        file.writelines(f'\n{school},{sName},{sID},{exDate}')
+
 with open('save_log.txt', 'r') as file:
     dataList = []
     for line in file:
         strip_lines = line.strip()
         dataList.append(strip_lines)
     print(dataList)
+    school = dataList[0] + ' ' + dataList[1]
+    sName = dataList[2]
+    sID = dataList[3]
+    exDate = dataList[4]
+    recordData(school, sName, sID, exDate)
 file.close()
-
 
 
 

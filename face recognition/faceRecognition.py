@@ -49,7 +49,7 @@ def recordAttendance(name):
             now = datetime.datetime.now()
             dtString = now.strftime('%H:%M:%S')
             file.writelines(f'\n{name},{dtString}')
-
+    file.close()
 encodeListKnown = findEncoding(images)  # call the function
 print('Encoding Complete')
 
