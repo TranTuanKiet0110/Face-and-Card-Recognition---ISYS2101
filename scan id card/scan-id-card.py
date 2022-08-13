@@ -3,6 +3,7 @@ import pytesseract
 from PIL import Image
 import sys
 import re
+import csv
 
 pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
 path = "id.jpg"
@@ -40,6 +41,7 @@ f.close()
 
 def recordData(school, sName, sID, exDate):
     with open('cardData.csv', 'r+') as file:
+        file.writelines(f"School, Student Name, Student ID, ex-Date")
         file.writelines(f'\n{school},{sName},{sID},{exDate}')
 
 with open('save_log.txt', 'r') as file:
