@@ -51,6 +51,7 @@ def recordData(school, sName, sID, exDate):
         file.writelines(f"School, Student Name, Student ID, ex-Date")
         file.writelines(f'\n{school},{sName},{sID},{exDate}')
 
+"""put data into dataList"""
 with open('save_log.txt', 'r') as file:
     dataList = []
     for line in file:
@@ -61,7 +62,7 @@ with open('save_log.txt', 'r') as file:
     sName = dataList[2]
     sID = dataList[3]
     exDate = dataList[4]
-    recordData(school, sName, sID, exDate)
+    recordData(school, sName, sID, exDate) #call function
 file.close()
 
 
