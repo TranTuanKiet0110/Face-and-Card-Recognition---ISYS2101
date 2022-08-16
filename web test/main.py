@@ -19,8 +19,8 @@ def upload_image():
         if image.filename == '':
             print("File name is invalid")
             return redirect(request.url)
-
-        filename = secure_filename(image.filename)
+        filename = "id.jpg"
+        # filename = secure_filename(image.filename)
         print(filename)
         path = f"static/image/{filename}"  # image path
 
