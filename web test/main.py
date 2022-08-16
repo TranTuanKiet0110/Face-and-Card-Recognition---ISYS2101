@@ -1,11 +1,8 @@
 from flask import Flask, render_template, request, redirect
 import os
-import cv2
 import pytesseract
 from PIL import Image
-import sys
 import re
-import csv
 app = Flask(__name__)
 
 app.config['IMAGE_UPLOADS'] = 'C:\Face-and-Card-Recognition---ISYS2101\web test\static\image'
@@ -92,8 +89,5 @@ def upload_image():
 
     return render_template("index.html")
 
-@app.route('/display/<filename>')
-def display_image(filename):
-    return redirect(url_for('static', filename='/images/'+filename), code=301)
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5500, debug=True)
