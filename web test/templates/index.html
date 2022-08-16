@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./bootstrap.css">
+    <title>Register Your Account</title>
 </head>
+
 <body>
-    {% if filename %}
-    <div>
-        <img src="{{ url_for('static',filename = '/images/'+filename) }}">
+    <div class="registerBox">
+        <h1 class="h1Design">Register Your Account</h1>
+        <p class="textDes">Please Upload Your student Number Card</p>
+        <form class="formBox" method="post" action="/home" enctype="multipart/form-data">
+            <p>
+                <input class="fileUploadBox" type="file" name="file" autocomplete="off" required>
+            </p>
+            <p>
+                <input class="submitBox btn btn-secondary" type="submit" value="Submit">
+            </p>
+        </form>
     </div>
-    {% endif %}
-    <form method ="post" action="/home" enctype="multipart/form-data">
-        <p>
-            <input type="file" name="file" autocomplete="off" required>
-        </p>
-        <p>
-            <input type="submit" value="Submit">
-        </p>
-    </form>
 </body>
+
 </html>
