@@ -20,7 +20,7 @@ def create():
     if request.method == 'GET':
         # get CSV fields from string query paramater
         fields = json.loads(request.args.get('fields').replace("'", '"'))
-        
+
         # render HTML page dynamically
         return render_template_string('''
            <html>
@@ -39,7 +39,7 @@ def create():
                        </div>
                      </div>
                    {% endfor %}
-                   
+
                    <!-- Submit form button -->
                    <input type="submit" class="btn btn-success mt-4" value="Submit"/>
                  </form>
@@ -47,17 +47,17 @@ def create():
              </body>
            </html>
         ''', fields=fields)
-    
+
     # HTTP GET method
     elif request.method == 'POST':
         # extract new CSV entry from submitted form
         data = dict(request.form)
-        
+
         # upodate the CSV file
         with open('cardData.csv', 'a') as f:
             writer = csv.DictWriter(f, fieldnames=data.keys())
             writer.writerow(data)
-        
+
         # return to READ data page (to see the updated data)
         return redirect('/')
 
@@ -66,15 +66,15 @@ def create():
 def read():
     # variable to hold CSV data
     data = []
-    
+
     # read data from CSV file
     with open('cardData.csv') as f:
         # create CSV dictionary reader instance
         reader = csv.DictReader(f)
-        
+
         # init CSV dataset
         [data.append(dict(row)) for row in reader]
-    
+
     # render HTML page dynamically
     return render_template_string('''
        <html>
@@ -86,10 +86,10 @@ def read():
            <div class="container">
              <!-- CRUD operations -->
              <div class="col">
-               
+
                <!--a class="btn btn-danger mt-5" href="/create">Delete</a-->
              </div>
-             
+
              <!-- CSV data -->
              <table class="table table-striped mt-2" style="width: 100%; border: 1px solid black">
                <thead>
@@ -131,15 +131,15 @@ def update():
     if request.method == 'GET':
         # updated data
         data = []
-        
+
         # open CSV file
         with open('cardData.csv') as rf:
             # create CSV dictionary reader
             reader = csv.DictReader(rf)
-            
+
             # init CSV rows
             [data.append(dict(row)) for row in reader]
-            
+
             return render_template_string('''
               <html>
                 <head>
@@ -163,7 +163,7 @@ def update():
                           </div>
                         </div>
                       {% endfor %}
-                      
+
                       <!-- Submit form button -->
                       <input type="submit" class="btn btn-success mt-4" value="Submit"/>
                     </form>
@@ -171,38 +171,38 @@ def update():
                 </body>
               </html>
             ''', fields=data[int(request.args.get('id'))])
-    
+
     # HTTP POST method
     elif request.method == 'POST':
         # updated data
         data = []
-        
+
         # open CSV file
         with open('cardData.csv') as rf:
             # create CSV dictionary reader
             reader = csv.DictReader(rf)
-            
+
             # init CSV rows
             [data.append(dict(row)) for row in reader]
-        
+
         # updated row
         row = {}
-        
+
         for key, val in dict(request.form).items():
             if key != 'Id':
                 row[key] = val
-        
+
         # update CSV row
         data[int(request.form.get('Id'))] = row
-        
+
         # write update CSV file
         with open('cardData.csv', 'w') as wf:
             # create CSV dictionary writer
             writer = csv.DictWriter(wf, fieldnames=data[0].keys())
-            
+
             # write CSV column names
             writer.writeheader()
-            
+
             # write CSV rows
             writer.writerows(data)
 
@@ -215,19 +215,19 @@ def delete():
     with open('cardData.csv') as rf:
         # updated data
         data = []
-        
+
         # load data
         temp_data = []
-        
+
         # create CSV dictionary reader
         reader = csv.DictReader(rf)
-        
+
         # init CSV rows
         [temp_data.append(dict(row)) for row in reader]
-        
+
         # create mew dataset but without a row to delete
         [
-            data.append(temp_data[row]) 
+            data.append(temp_data[row])
             for row in range(0, len(temp_data))
             if row != int(request.args.get('id'))
         ]
@@ -236,10 +236,10 @@ def delete():
         with open('cardData.csv', 'w') as wf:
             # create CSV dictionary writer
             writer = csv.DictWriter(wf, fieldnames=data[0].keys())
-            
+
             # write CSV column names
             writer.writeheader()
-            
+
             # write CSV rows
             writer.writerows(data)
 
