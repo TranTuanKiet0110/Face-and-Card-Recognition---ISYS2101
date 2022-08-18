@@ -65,45 +65,19 @@ def upload_image():
         f.write(output2)
         f.close()
 
-        """function to record data into csv file"""
-
-        def recordData(school, sName, sID, exDate):
-            with open('cardData.csv', 'r+') as file:
-                file.writelines(f"School, Student Name, Student ID, ex-Date")
-                file.writelines(f'\n{school},{sName},{sID},{exDate}')
-
-        """put data into dataList"""
         with open('save_log.txt', 'r') as file:
-            dataList = []
+            infoList = []
             for line in file:
                 strip_lines = line.strip()
-                dataList.append(strip_lines)
-            print(dataList)
-            school = dataList[0] + ' ' + dataList[1]
-            sName = dataList[2]
-            sID = dataList[3]
-            exDate = dataList[4]
-            recordData(school, sName, sID, exDate)  # call function
+                infoList.append(strip_lines)
+            print(infoList)
+            school = infoList[0] + ' ' + infoList[1]
+            sname = infoList[2]
+            sid = "s" + infoList[3]
+            exdate = infoList[4]
         file.close()
-        # return render_template("readText.html")
-        return redirect('/userinfo')
+        return render_template("editAndConfirm.html", school=school, sname=sname, sid=sid, exdate=exdate)
     return render_template("index.html")
 
-@app.route('/userinfo', methods=['GET', 'POST'])
-def userinfo():
-    with open('save_log.txt', 'r') as file:
-        infoList = []
-        for line in file:
-            strip_lines = line.strip()
-            infoList.append(strip_lines)
-        print(infoList)
-        school = infoList[0] + ' ' + infoList[1]
-        sname = infoList[2]
-        sid = infoList[3]
-        exdate = infoList[4]
-    file.close()
-
-    return render_template("readText.html", school=school, sname=sname, sid=sid, exdate=exdate)
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5500, debug=True)
+    app.run(host='localhost', port=5500, debug=True)
