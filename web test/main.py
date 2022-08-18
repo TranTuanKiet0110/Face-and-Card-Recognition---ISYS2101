@@ -3,12 +3,13 @@ import os
 import pytesseract
 from PIL import Image
 import re
+
 app = Flask(__name__)
 
 app.config['IMAGE_UPLOADS'] = 'C:\Face-and-Card-Recognition---ISYS2101\web test\static\image'
 from werkzeug.utils import secure_filename
 
-@app.route("/home", methods=['POST', "GET"])
+@app.route("/", methods=['POST', "GET"])
 def upload_image():
     if request.method == "POST":
 
@@ -19,8 +20,8 @@ def upload_image():
         if image.filename == '':
             print("File name is invalid")
             return redirect(request.url)
+
         filename = "id.jpg"
-        # filename = secure_filename(image.filename)
         print(filename)
         path = f"static/image/{filename}"  # image path
 
@@ -84,10 +85,25 @@ def upload_image():
             exDate = dataList[4]
             recordData(school, sName, sID, exDate)  # call function
         file.close()
-        return render_template("index.html", filename=filename)
-
-
+        # return render_template("readText.html")
+        return redirect('/userinfo')
     return render_template("index.html")
+
+@app.route('/userinfo', methods=['GET', 'POST'])
+def userinfo():
+    with open('save_log.txt', 'r') as file:
+        infoList = []
+        for line in file:
+            strip_lines = line.strip()
+            infoList.append(strip_lines)
+        print(infoList)
+        school = infoList[0] + ' ' + infoList[1]
+        sname = infoList[2]
+        sid = infoList[3]
+        exdate = infoList[4]
+    file.close()
+
+    return render_template("readText.html", school=school, sname=sname, sid=sid, exdate=exdate)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5500, debug=True)
