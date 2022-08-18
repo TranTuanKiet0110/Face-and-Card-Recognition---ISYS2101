@@ -74,10 +74,14 @@ def upload_image():
             school = infoList[0] + ' ' + infoList[1]
             sname = infoList[2]
             sid = "s" + infoList[3]
-            exdate = infoList[4]
+            exdate = infoList[4][13:29]
         file.close()
-        return render_template("editAndConfirm.html", school=school, sname=sname, sid=sid, exdate=exdate)
+        return render_template("viewEdit.html", school=school, sname=sname, sid=sid, exdate=exdate)
     return render_template("index.html")
 
+@app.route("/edit", methods=['POST', "GET"])
+def edit():
+    if request.method == "POST":
+        return render_template("editAndConfirm.html")
 if __name__ == '__main__':
     app.run(host='localhost', port=5500, debug=True)
