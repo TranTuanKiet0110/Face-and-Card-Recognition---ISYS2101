@@ -1,53 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{{ url_for('static',filename='styles/viewEdit.css') }}">
-    <title>Edit And Confirm</title>
-  </head>
-  <body>
-    <div class="confirmBox">
-      <div class="textBox">
-        <h1>Confirm Your Information</h1>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles/viewEdit.css') }}">
+  <title>Edit And Confirm</title>
+</head>
+
+<body>
+  <div class="confirmBox">
+    <div class="textBox">
+      <h1>Confirm Your Information</h1>
+    </div>
+    <div class="informationBox">
+      <div class="inputBox">
+        <label>Your School: {{school}}</label>
       </div>
-      <div class="informationBox">
-        <div class="inputBox">
-          <label>Your School: {{school}}</label>
-          <!-- <input class="inputDes1" placeholder="RMIT UNIVERSITY" /> -->
-        </div>
-        <div class="inputBox">
-          <label>Your Fullname: {{sname}}</label>
-          <!-- <input class="inputDes2" placeholder="PHAM VIET HOANG" /> -->
-        </div>
-        <div class="inputBox">
-          <label>Your Student Number: {{sid}}</label>
-          <!-- <input class="inputDes3" placeholder="S3891455" /> -->
-        </div>
-        <div class="inputBox">
-          <label>Your Expiry Date: {{exdate}}</label>
-          <!-- <input class="inputDes4" placeholder="31 December 2023" /> -->
-        </div>
+      <div class="inputBox">
+        <label>Your Fullname: {{sname}}</label>
+      </div>
+      <div class="inputBox">
+        <label>Your Student Number: {{sid}}</label>
+      </div>
+      <div class="inputBox">
+        <label>Your Expiry Date: {{exdate}}</label>
       </div>
     </div>
-
-    <!-- <div class="buttonBox">
-        <div class="button1">
-            <a>Confirm</a>
-        </div>
-        <div class="button2">
-            Edit and Confirm
-        </div>
-    </div> -->
-
-    <form class="buttonBox" method="post" enctype="multipart/form-data">
-      <p>
-          <input class="button1" type="submit" value="Confirm">
-      </p>
-      <p>
-          <input class="button2" type="submit" value="Edit and Confirm">
-      </p>
+  </div>
+  <form class="buttonBox" method="post" enctype="multipart/form-data">
+    <div>
+      <a class="button1" href="{{ url_for('confirm') }}" style="text-decoration: none;">Confirm</a>
+    </div>
+    <div>
+      <a class="button2" href="{{ url_for('edit')}}" style="text-decoration: none;">Edit and Confirm</a>
+    </div>
   </form>
-  </body>
+</body>
+
 </html>
