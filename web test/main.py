@@ -7,7 +7,6 @@ import re
 app = Flask(__name__)
 
 app.config['IMAGE_UPLOADS'] = 'C:\Face-and-Card-Recognition---ISYS2101\web test\static\image'
-from werkzeug.utils import secure_filename
 
 @app.route("/", methods=['POST', "GET"])
 def upload_image():
