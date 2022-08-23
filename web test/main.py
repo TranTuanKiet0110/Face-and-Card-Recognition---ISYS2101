@@ -81,7 +81,83 @@ def upload_image():
 
 @app.route("/edit", methods=['POST', "GET"])
 def edit():
-    if request.method == "POST":
-        return render_template("editAndConfirm.html")
+    with open('save_log.txt', 'r') as file:
+        infoList = []
+        for line in file:
+            strip_lines = line.strip()
+            infoList.append(strip_lines)
+        print(infoList)
+        school = infoList[0] + ' ' + infoList[1]
+        sname = infoList[2]
+        sid = "s" + infoList[3]
+        exdate = infoList[4][13:29]
+    file.close()
+    return render_template("editAndConfirm.html", school=school, sname=sname, sid=sid, exdate=exdate)
+
+@app.route("/confirm", methods=['POST'])
+def confirm():
+    with open('save_log.txt', 'r') as file:
+        oldInfoList = []
+        for line in file:
+            strip_lines = line.strip()
+            oldInfoList.append(strip_lines)
+        old_school = oldInfoList[0] + ' ' + oldInfoList[1]
+        old_sname = oldInfoList[2]
+        old_sid = "s" + oldInfoList[3]
+        old_exdate = oldInfoList[4][13:29]
+    file.close()
+
+    new_school = request.form['school']
+    new_sname = request.form['sname']
+    new_sid = request.form['sid']
+    new_exdate = request.form['exdate']
+    nl = '\n'
+
+    with open('save_log.txt', 'w') as file:
+        if new_school == "" and new_sname == "" and new_sid == "" and new_exdate == "":
+            file.writelines(f'{str(old_school).replace(" ", nl)}\n{str(old_sname)}\n{str(old_sid)}\n{str(old_exdate)}')
+        elif new_school == "" and new_sname == "" and new_sid == "":
+            file.writelines(f'{str(old_school)}\n{str(old_sname)}\n{str(old_sid)}\n{str(new_exdate)}')
+        elif new_school == "" and new_sname == "" and new_exdate == "":
+            file.writelines(f'{str(old_school)}\n{str(old_sname)}\n{str(new_sid)}\n{str(old_exdate)}')
+        elif new_school == "" and new_sid == "" and new_exdate == "":
+            file.writelines(f'{str(old_school)}\n{str(new_sname)}\n{str(old_sid)}\n{str(old_exdate)}')
+        elif new_sname == "" and new_sid == "" and new_exdate == "":
+            file.writelines(f'{str(new_school)}\n{str(old_sname)}\n{str(old_sid)}\n{str(old_exdate)}')
+        elif new_school == "" and new_sname == "":
+            file.writelines(f'{str(old_school)}\n{str(old_sname)}\n{str(new_sid)}\n{str(new_exdate)}')
+        elif new_school == "" and new_sid == "":
+            file.writelines(f'{str(old_school)}\n{str(new_sname)}\n{str(old_sid)}\n{str(new_exdate)}')
+        elif new_school == "" and new_exdate == "":
+            file.writelines(f'{str(old_school)}\n{str(new_sname)}\n{str(new_sid)}\n{str(old_exdate)}')
+        elif new_sname == "" and new_sid == "":
+            file.writelines(f'{str(new_school)}\n{str(old_sname)}\n{str(old_sid)}\n{str(new_exdate)}')
+        elif new_sname == "" and new_exdate == "":
+            file.writelines(f'{str(new_school)}\n{str(old_sname)}\n{str(new_sid)}\n{str(old_exdate)}')
+        elif new_sid == "" and new_exdate == "":
+            file.writelines(f'{str(new_school)}\n{str(new_sname)}\n{str(old_sid)}\n{str(old_exdate)}')
+        elif new_school == "":
+            file.writelines(f'{str(old_school)}\n{str(new_sname)}\n{str(new_sid)}\n{str(new_exdate)}')
+        elif new_sname == "":
+            file.writelines(f'{str(new_school)}\n{str(old_sname)}\n{str(new_sid)}\n{str(new_exdate)}')
+        elif new_sid == "":
+            file.writelines(f'{str(new_school)}\n{str(new_sname)}\n{str(old_sid)}\n{str(new_exdate)}')
+        elif new_exdate == "":
+            file.writelines(f'{str(new_school)}\n{str(new_sname)}\n{str(new_sid)}\n{str(old_exdate)}')
+    file.close()
+
+    with open('save_log.txt', 'r') as file:
+        infoList = []
+        for line in file:
+            strip_lines = line.strip()
+            infoList.append(strip_lines)
+        print(infoList)
+        school = infoList[0] + ' ' + infoList[1]
+        sname = infoList[2]
+        sid = infoList[3]
+        exdate = infoList[4]
+    file.close()
+    return render_template("viewEdit.html", school=school, sname=sname, sid=sid, exdate=exdate)
+
 if __name__ == '__main__':
     app.run(host='localhost', port=5500, debug=True)

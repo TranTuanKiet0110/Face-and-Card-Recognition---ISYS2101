@@ -1,42 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <link rel="stylesheet" href="../static/styles/viewEdit.css" /> -->
-    <link rel="stylesheet" href="{{ url_for('static',filename='styles/viewEdit.css') }}">
-    <title>Edit And Confirm</title>
-  </head>
-  <body>
-    <div class="confirmBox">
-      <div class="textBox">
-        <h1>Confirm Your Information</h1>
-      </div>
-      <div class="informationBox">
-        <div class="inputBox">
-          <label>Your School: </label>
-          <input class="inputDes1" placeholder="{{school}}"/>
-        </div>
-        <div class="inputBox">
-          <label>Your Fullname: </label>
-          <input class="inputDes2" placeholder="{{sname}}" />
-        </div>
-        <div class="inputBox">
-          <label>Your Student Number: </label>
-          <input class="inputDes3" placeholder="{{sid}}" />
-        </div>
-        <div class="inputBox">
-          <label>Your Expiry Date: </label>
-          <input class="inputDes4" placeholder="{{exdate}}" />
-        </div>
-      </div>
-    </div>
 
-    <div class="buttonBox">
-        <div class="button1 button3">
-            <a>Confirm</a>
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles/viewEdit.css') }}">
+  <title>Edit And Confirm</title>
+</head>
+
+<body>
+  <div class="confirmBox">
+    <div class="textBox">
+      <h1>Confirm Your Information</h1>
     </div>
-  </body>
+    <form class="informationBox" method="post" action="{{ url_for('confirm') }}" enctype="multipart/form-data">
+      <div class="inputBox">
+        <label>Your School: </label>
+        <input class="inputDes1" name="school" placeholder="{{school}}" />
+      </div>
+      <div class="inputBox">
+        <label>Your Fullname: </label>
+        <input class="inputDes2" name="sname" placeholder="{{sname}}" />
+      </div>
+      <div class="inputBox">
+        <label>Your Student Number: </label>
+        <input class="inputDes3" name="sid" placeholder="{{sid}}" />
+      </div>
+      <div class="inputBox">
+        <label>Your Expiry Date: </label>
+        <input class="inputDes4" name="exdate" placeholder="{{exdate}}" />
+      </div>
+      <input class="submitBox btn btn-secondary" type="submit" value="Submit">
+    </form>
+  </div>
+
+  <!-- <div class="buttonBox">
+    <div class="button1 button3">
+      <a>Confirm</a>
+    </div>
+  </div> -->
+</body>
+
 </html>
