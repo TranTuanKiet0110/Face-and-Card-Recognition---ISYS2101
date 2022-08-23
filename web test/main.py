@@ -76,8 +76,8 @@ def upload_image():
             sid = "s" + infoList[3]
             exdate = infoList[4][13:29]
         file.close()
-        return render_template("viewEdit.html", school=school, sname=sname, sid=sid, exdate=exdate)
-    return render_template("index.html")
+        return render_template("viewInfo.html", school=school, sname=sname, sid=sid, exdate=exdate)
+    return render_template("uploadID.html")
 
 @app.route("/edit", methods=['POST', "GET"])
 def edit():
@@ -92,10 +92,14 @@ def edit():
         sid = "s" + infoList[3]
         exdate = infoList[4][13:29]
     file.close()
-    return render_template("editAndConfirm.html", school=school, sname=sname, sid=sid, exdate=exdate)
+    return render_template("editInfo.html", school=school, sname=sname, sid=sid, exdate=exdate)
 
-@app.route("/confirm", methods=['POST'])
+@app.route("/confirm", methods=['POST', 'GET'])
 def confirm():
+    return render_template('uploadYourImage.html')
+
+@app.route("/editForm", methods=['POST'])
+def editForm():
     with open('save_log.txt', 'r') as file:
         oldInfoList = []
         for line in file:
@@ -111,11 +115,10 @@ def confirm():
     new_sname = request.form['sname']
     new_sid = request.form['sid']
     new_exdate = request.form['exdate']
-    nl = '\n'
 
     with open('save_log.txt', 'w') as file:
         if new_school == "" and new_sname == "" and new_sid == "" and new_exdate == "":
-            file.writelines(f'{str(old_school).replace(" ", nl)}\n{str(old_sname)}\n{str(old_sid)}\n{str(old_exdate)}')
+            file.writelines(f'{str(old_school)}\n{str(old_sname)}\n{str(old_sid)}\n{str(old_exdate)}')
         elif new_school == "" and new_sname == "" and new_sid == "":
             file.writelines(f'{str(old_school)}\n{str(old_sname)}\n{str(old_sid)}\n{str(new_exdate)}')
         elif new_school == "" and new_sname == "" and new_exdate == "":
@@ -152,12 +155,90 @@ def confirm():
             strip_lines = line.strip()
             infoList.append(strip_lines)
         print(infoList)
-        school = infoList[0] + ' ' + infoList[1]
-        sname = infoList[2]
-        sid = infoList[3]
-        exdate = infoList[4]
+        school = infoList[0]
+        sname = infoList[1]
+        sid = infoList[2]
+        exdate = infoList[3]
     file.close()
-    return render_template("viewEdit.html", school=school, sname=sname, sid=sid, exdate=exdate)
+    return render_template("viewInfoSecond.html", school=school, sname=sname, sid=sid, exdate=exdate)
+
+@app.route("/editSecond", methods=['POST', "GET"])
+def editSecond():
+    with open('save_log.txt', 'r') as file:
+        infoList = []
+        for line in file:
+            strip_lines = line.strip()
+            infoList.append(strip_lines)
+        print(infoList)
+        school = infoList[0]
+        sname = infoList[1]
+        sid = infoList[2]
+        exdate = infoList[3]
+    file.close()
+    return render_template("editInfoSecond.html", school=school, sname=sname, sid=sid, exdate=exdate)
+
+@app.route("/editFormSecond", methods=['POST'])
+def editFormSecond():
+    with open('save_log.txt', 'r') as file:
+        oldInfoList = []
+        for line in file:
+            strip_lines = line.strip()
+            oldInfoList.append(strip_lines)
+        old_school = oldInfoList[0]
+        old_sname = oldInfoList[1]
+        old_sid = oldInfoList[2]
+        old_exdate = oldInfoList[3]
+    file.close()
+
+    new_school = request.form['school']
+    new_sname = request.form['sname']
+    new_sid = request.form['sid']
+    new_exdate = request.form['exdate']
+
+    with open('save_log.txt', 'w') as file:
+        if new_school == "" and new_sname == "" and new_sid == "" and new_exdate == "":
+            file.writelines(f'{str(old_school)}\n{str(old_sname)}\n{str(old_sid)}\n{str(old_exdate)}')
+        elif new_school == "" and new_sname == "" and new_sid == "":
+            file.writelines(f'{str(old_school)}\n{str(old_sname)}\n{str(old_sid)}\n{str(new_exdate)}')
+        elif new_school == "" and new_sname == "" and new_exdate == "":
+            file.writelines(f'{str(old_school)}\n{str(old_sname)}\n{str(new_sid)}\n{str(old_exdate)}')
+        elif new_school == "" and new_sid == "" and new_exdate == "":
+            file.writelines(f'{str(old_school)}\n{str(new_sname)}\n{str(old_sid)}\n{str(old_exdate)}')
+        elif new_sname == "" and new_sid == "" and new_exdate == "":
+            file.writelines(f'{str(new_school)}\n{str(old_sname)}\n{str(old_sid)}\n{str(old_exdate)}')
+        elif new_school == "" and new_sname == "":
+            file.writelines(f'{str(old_school)}\n{str(old_sname)}\n{str(new_sid)}\n{str(new_exdate)}')
+        elif new_school == "" and new_sid == "":
+            file.writelines(f'{str(old_school)}\n{str(new_sname)}\n{str(old_sid)}\n{str(new_exdate)}')
+        elif new_school == "" and new_exdate == "":
+            file.writelines(f'{str(old_school)}\n{str(new_sname)}\n{str(new_sid)}\n{str(old_exdate)}')
+        elif new_sname == "" and new_sid == "":
+            file.writelines(f'{str(new_school)}\n{str(old_sname)}\n{str(old_sid)}\n{str(new_exdate)}')
+        elif new_sname == "" and new_exdate == "":
+            file.writelines(f'{str(new_school)}\n{str(old_sname)}\n{str(new_sid)}\n{str(old_exdate)}')
+        elif new_sid == "" and new_exdate == "":
+            file.writelines(f'{str(new_school)}\n{str(new_sname)}\n{str(old_sid)}\n{str(old_exdate)}')
+        elif new_school == "":
+            file.writelines(f'{str(old_school)}\n{str(new_sname)}\n{str(new_sid)}\n{str(new_exdate)}')
+        elif new_sname == "":
+            file.writelines(f'{str(new_school)}\n{str(old_sname)}\n{str(new_sid)}\n{str(new_exdate)}')
+        elif new_sid == "":
+            file.writelines(f'{str(new_school)}\n{str(new_sname)}\n{str(old_sid)}\n{str(new_exdate)}')
+        elif new_exdate == "":
+            file.writelines(f'{str(new_school)}\n{str(new_sname)}\n{str(new_sid)}\n{str(old_exdate)}')
+    file.close()
+
+    with open('save_log.txt', 'r') as file:
+        newInfoList = []
+        for line in file:
+            strip_lines = line.strip()
+            newInfoList.append(strip_lines)
+        school = newInfoList[0]
+        sname = newInfoList[1]
+        sid = newInfoList[2]
+        exdate = newInfoList[3]
+    file.close()
+    return render_template("viewInfoSecond.html", school=school, sname=sname, sid=sid, exdate=exdate)
 
 if __name__ == '__main__':
     app.run(host='localhost', port=5500, debug=True)
