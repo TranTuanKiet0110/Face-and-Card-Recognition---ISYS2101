@@ -3,7 +3,7 @@ import os
 import pytesseract
 from PIL import Image
 import re
-
+from werkzeug.utils import secure_filename
 app = Flask(__name__)
 
 app.config['IMAGE_UPLOADS'] = 'C:\Face-and-Card-Recognition---ISYS2101\web test\static\image'
@@ -95,7 +95,8 @@ def edit():
 
 @app.route("/confirm", methods=['POST', 'GET'])
 def confirm():
-    return render_template('uploadYourImage.html')
+    num = 10
+    return render_template('uploadYourImage.html', number=num)
 
 @app.route("/editForm", methods=['POST'])
 def editForm():
@@ -238,6 +239,30 @@ def editFormSecond():
         exdate = newInfoList[3]
     file.close()
     return render_template("viewInfoSecond.html", school=school, sname=sname, sid=sid, exdate=exdate)
+
+@app.route("/uploadImage", methods=['POST', "GET"])
+def uploadImage():
+    with open('save_log.txt', 'r') as file:
+        newInfoList = []
+        for line in file:
+            strip_lines = line.strip()
+            newInfoList.append(strip_lines)
+        sid = 's' + newInfoList[3]
+    file.close()
+
+    if request.method == "POST":
+
+        image = request.files['file']
+
+        if image.filename == '':
+            print("File name is invalid")
+            return redirect(request.url)
+        filename = secure_filename(image.filename)
+        folder_name = sid
+        folder = os.path.join('user_image', folder_name)
+        os.makedirs(folder)
+        image.save(os.path.join(folder, filename))
+        return render_template("uploadYourImage.html")
 
 if __name__ == '__main__':
     app.run(host='localhost', port=5500, debug=True)
