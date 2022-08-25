@@ -14,7 +14,7 @@
     <div class="registerBox">
         <h1 class="h1Design">Register Your Account</h1>
         <p class="textDes">Please Upload Your student Number Card</p>
-        <form class="formBox" method="post" enctype="multipart/form-data">
+        <form class="formBox" method="post" action="{{ url_for('uploadID') }}" enctype="multipart/form-data">
             <p>
                 <input class="fileUploadBox" type="file" name="file" autocomplete="off" required>
             </p>

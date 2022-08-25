@@ -5,7 +5,8 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="{{ url_for('static',filename='styles/viewEdit.css') }}">
+  <!-- <link rel="stylesheet" href="{{ url_for('static',filename='styles/viewEdit.css') }}"> -->
+  <link rel="stylesheet" href="viewEdit.css">
   <title>Upload Your Image</title>
 </head>
 
@@ -14,7 +15,7 @@
     <h1 class="textBox textBoxx">Upload Your Image</h1>
     <p class="descriptBox">
       <strong>Please Upload your image in many sides <br />
-        The system need at least 10 images from your portrait</strong>
+        The system need at least 5 images from your portrait</strong>
     </p>
   </div>
   <div>
@@ -24,7 +25,7 @@
     <form method="post" action="{{ url_for('uploadImage') }}" enctype="multipart/form-data">
       <div class="uploadBox">
         <label>Upload Your Portrait: </label>
-        <label>Number of image left: {{number}} </label>
+        <p>Number of image left: {{number}}</p>
         <input class="fileUpload" type="file" id="file" name="file" />
       </div>
       <!-- <div class="uploadBox">

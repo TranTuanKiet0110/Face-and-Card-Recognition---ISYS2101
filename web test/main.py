@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.config['IMAGE_UPLOADS'] = 'C:\Face-and-Card-Recognition---ISYS2101\web test\static\image'
 
 @app.route("/", methods=['POST', "GET"])
-def upload_image():
+def uploadID():
     if request.method == "POST":
 
         image = request.files['file']
@@ -95,7 +95,39 @@ def edit():
 
 @app.route("/confirm", methods=['POST', 'GET'])
 def confirm():
-    num = 10
+    with open('save_log.txt', 'r') as file:
+        infoConfirmList = []
+        for line in file:
+            strip_lines = line.strip()
+            infoConfirmList.append(strip_lines)
+        school = infoConfirmList[0] + ' ' + infoConfirmList[1]
+        sname = infoConfirmList[2]
+        sid = "s" + infoConfirmList[3]
+        exdate = infoConfirmList[4][13:29]
+    file.close()
+
+    with open('save_log.txt', 'w') as f:
+        f.writelines(f'{str(school)}\n{str(sname)}\n{str(sid)}\n{str(exdate)}')
+    f.close()
+    num = 5
+    return render_template('uploadYourImage.html', number=num)
+
+@app.route("/confirm1", methods=['POST', 'GET'])
+def confirm1():
+    with open('save_log.txt', 'r') as file:
+        infoDataList = []
+        for line in file:
+            strip_lines = line.strip()
+            infoDataList.append(strip_lines)
+        school = infoDataList[0]
+        sname = infoDataList[1]
+        sid = infoDataList[2]
+        exdate = infoDataList[3]
+    file.close()
+    with open('save_log.txt', 'w') as file:
+        file.writelines(f'{str(school)}\n{str(sname)}\n{str(sid)}\n{str(exdate)}')
+    file.close()
+    num = 5
     return render_template('uploadYourImage.html', number=num)
 
 @app.route("/editForm", methods=['POST'])
@@ -147,18 +179,19 @@ def editForm():
             file.writelines(f'{str(new_school)}\n{str(new_sname)}\n{str(old_sid)}\n{str(new_exdate)}')
         elif new_exdate == "":
             file.writelines(f'{str(new_school)}\n{str(new_sname)}\n{str(new_sid)}\n{str(old_exdate)}')
+        else:
+            file.writelines(f'{str(new_school)}\n{str(new_sname)}\n{str(new_sid)}\n{str(new_exdate)}')
     file.close()
 
     with open('save_log.txt', 'r') as file:
-        infoList = []
+        infoDataList = []
         for line in file:
             strip_lines = line.strip()
-            infoList.append(strip_lines)
-        print(infoList)
-        school = infoList[0]
-        sname = infoList[1]
-        sid = infoList[2]
-        exdate = infoList[3]
+            infoDataList.append(strip_lines)
+        school = infoDataList[0]
+        sname = infoDataList[1]
+        sid = infoDataList[2]
+        exdate = infoDataList[3]
     file.close()
     return render_template("viewInfoSecond.html", school=school, sname=sname, sid=sid, exdate=exdate)
 
@@ -226,6 +259,8 @@ def editFormSecond():
             file.writelines(f'{str(new_school)}\n{str(new_sname)}\n{str(old_sid)}\n{str(new_exdate)}')
         elif new_exdate == "":
             file.writelines(f'{str(new_school)}\n{str(new_sname)}\n{str(new_sid)}\n{str(old_exdate)}')
+        else:
+            file.writelines(f'{str(new_school)}\n{str(new_sname)}\n{str(new_sid)}\n{str(new_exdate)}')
     file.close()
 
     with open('save_log.txt', 'r') as file:
@@ -247,7 +282,7 @@ def uploadImage():
         for line in file:
             strip_lines = line.strip()
             newInfoList.append(strip_lines)
-        sid = 's' + newInfoList[3]
+        sid = newInfoList[2]
     file.close()
 
     if request.method == "POST":
@@ -262,7 +297,99 @@ def uploadImage():
         folder = os.path.join('user_image', folder_name)
         os.makedirs(folder)
         image.save(os.path.join(folder, filename))
-        return render_template("uploadYourImage.html")
+        return render_template("uploadYourImage2.html", number=4)
+
+@app.route("/uploadImage2", methods=['POST', "GET"])
+def uploadImage2():
+    with open('save_log.txt', 'r') as file:
+        newInfoList = []
+        for line in file:
+            strip_lines = line.strip()
+            newInfoList.append(strip_lines)
+        sid = newInfoList[2]
+    file.close()
+
+    if request.method == "POST":
+
+        image = request.files['file']
+
+        if image.filename == '':
+            print("File name is invalid")
+            return redirect(request.url)
+        filename = secure_filename(image.filename)
+        folder_name = sid
+        folder = os.path.join('user_image', folder_name)
+        image.save(os.path.join(folder, filename))
+        return render_template("uploadYourImage3.html", number=3)
+
+@app.route("/uploadImage3", methods=['POST', "GET"])
+def uploadImage3():
+    with open('save_log.txt', 'r') as file:
+        newInfoList = []
+        for line in file:
+            strip_lines = line.strip()
+            newInfoList.append(strip_lines)
+        sid = newInfoList[2]
+    file.close()
+
+    if request.method == "POST":
+
+        image = request.files['file']
+
+        if image.filename == '':
+            print("File name is invalid")
+            return redirect(request.url)
+        filename = secure_filename(image.filename)
+        folder_name = sid
+        folder = os.path.join('user_image', folder_name)
+        image.save(os.path.join(folder, filename))
+        return render_template("uploadYourImage4.html", number=2)
+
+@app.route("/uploadImage4", methods=['POST', "GET"])
+def uploadImage4():
+    with open('save_log.txt', 'r') as file:
+        newInfoList = []
+        for line in file:
+            strip_lines = line.strip()
+            newInfoList.append(strip_lines)
+        sid = newInfoList[2]
+    file.close()
+
+    if request.method == "POST":
+
+        image = request.files['file']
+
+        if image.filename == '':
+            print("File name is invalid")
+            return redirect(request.url)
+        filename = secure_filename(image.filename)
+        folder_name = sid
+        folder = os.path.join('user_image', folder_name)
+        image.save(os.path.join(folder, filename))
+        return render_template("uploadYourImage5.html", number=1)
+
+@app.route("/uploadImage5", methods=['POST', "GET"])
+def uploadImage5():
+    with open('save_log.txt', 'r') as file:
+        newInfoList = []
+        for line in file:
+            strip_lines = line.strip()
+            newInfoList.append(strip_lines)
+        sid = newInfoList[2]
+    file.close()
+
+    if request.method == "POST":
+
+        image = request.files['file']
+
+        if image.filename == '':
+            print("File name is invalid")
+            return redirect(request.url)
+        filename = secure_filename(image.filename)
+        folder_name = sid
+        folder = os.path.join('user_image', folder_name)
+        image.save(os.path.join(folder, filename))
+        return render_template("uploadID.html")
 
 if __name__ == '__main__':
     app.run(host='localhost', port=5500, debug=True)
