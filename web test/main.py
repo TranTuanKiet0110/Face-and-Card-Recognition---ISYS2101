@@ -4,11 +4,20 @@ import pytesseract
 from PIL import Image
 import re
 from werkzeug.utils import secure_filename
+from pathlib import Path
 app = Flask(__name__)
 
 app.config['IMAGE_UPLOADS'] = 'C:\Face-and-Card-Recognition---ISYS2101\web test\static\image'
 
 @app.route("/", methods=['POST', "GET"])
+def homepage():
+    return render_template("homepage.html")
+
+@app.route("/register", methods=['POST', "GET"])
+def openRegister():
+    return render_template("uploadID.html")
+
+@app.route("/uploadID", methods=['POST', "GET"])
 def uploadID():
     if request.method == "POST":
 
@@ -76,7 +85,7 @@ def uploadID():
             exdate = infoList[4][13:29]
         file.close()
         return render_template("viewInfo.html", school=school, sname=sname, sid=sid, exdate=exdate)
-    return render_template("uploadID.html")
+    # return render_template("uploadID.html")
 
 @app.route("/edit", methods=['POST', "GET"])
 def edit():
@@ -282,7 +291,10 @@ def uploadImage():
         for line in file:
             strip_lines = line.strip()
             newInfoList.append(strip_lines)
+        school = newInfoList[0]
+        sname = newInfoList[1]
         sid = newInfoList[2]
+        exdate = newInfoList[3]
     file.close()
 
     if request.method == "POST":
@@ -294,8 +306,11 @@ def uploadImage():
             return redirect(request.url)
         filename = secure_filename(image.filename)
         folder_name = sid
-        folder = os.path.join('user_image', folder_name)
-        os.makedirs(folder)
+        folder = os.path.join('user_data', folder_name)
+        if school == "RMIT UNIVERSITY":
+            os.makedirs(folder)
+        else:
+            return render_template("uploadID.html")
         image.save(os.path.join(folder, filename))
         return render_template("uploadYourImage2.html", number=4)
 
@@ -318,7 +333,7 @@ def uploadImage2():
             return redirect(request.url)
         filename = secure_filename(image.filename)
         folder_name = sid
-        folder = os.path.join('user_image', folder_name)
+        folder = os.path.join('user_data', folder_name)
         image.save(os.path.join(folder, filename))
         return render_template("uploadYourImage3.html", number=3)
 
@@ -341,7 +356,7 @@ def uploadImage3():
             return redirect(request.url)
         filename = secure_filename(image.filename)
         folder_name = sid
-        folder = os.path.join('user_image', folder_name)
+        folder = os.path.join('user_data', folder_name)
         image.save(os.path.join(folder, filename))
         return render_template("uploadYourImage4.html", number=2)
 
@@ -364,7 +379,7 @@ def uploadImage4():
             return redirect(request.url)
         filename = secure_filename(image.filename)
         folder_name = sid
-        folder = os.path.join('user_image', folder_name)
+        folder = os.path.join('user_data', folder_name)
         image.save(os.path.join(folder, filename))
         return render_template("uploadYourImage5.html", number=1)
 
@@ -387,9 +402,9 @@ def uploadImage5():
             return redirect(request.url)
         filename = secure_filename(image.filename)
         folder_name = sid
-        folder = os.path.join('user_image', folder_name)
+        folder = os.path.join('user_data', folder_name)
         image.save(os.path.join(folder, filename))
-        return render_template("uploadID.html")
+        return render_template("homepage.html")
 
 if __name__ == '__main__':
     app.run(host='localhost', port=5500, debug=True)
