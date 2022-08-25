@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -13,19 +14,36 @@
       <h1 class="textBox textBoxx">Upload Your Image</h1>
       <p class="descriptBox">
         <strong>Please Upload your image in many sides <br />
+=======
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles/viewEdit.css') }}">
+  <title>Upload Your Image</title>
+</head>
+
+<body>
+  <div class="uploadBox">
+    <h1 class="textBox textBoxx">Upload Your Image</h1>
+    <p class="descriptBox">
+      <strong>Please Upload your image in many sides <br />
+>>>>>>> d76d41401438957453849a97409c6f125e68c5c7
         The system need at least 10 images from your portrait</strong>
-      </p>
-    </div>
-    <div>
-      <img class="faceID" src="./Image Resources/face-id.png" />
-    </div>
-    <div class="activeBox">
-      <form action="/action_page.php">
-        <div class="uploadBox">
-          <label>Upload Your First Portrait: </label>
-          <input class="fileUpload" type="file" id="myFile" name="filename" />
-        </div>
-        <div class="uploadBox">
+    </p>
+  </div>
+  <div>
+    <img class="faceID" src="./Image Resources/face-id.png" />
+  </div>
+  <div class="activeBox">
+    <form method="post" action="{{ url_for('uploadImage') }}" enctype="multipart/form-data">
+      <div class="uploadBox">
+        <label>Upload Your Portrait: </label>
+        <label>Number of image left: {{number}} </label>
+        <input class="fileUpload" type="file" id="file" name="file" />
+      </div>
+      <!-- <div class="uploadBox">
           <label>Upload Your Second Portrait: </label>
           <input class="fileUpload" type="file" id="myFile" name="filename" />
         </div>
@@ -60,9 +78,10 @@
         <div class="uploadBox">
           <label>Upload Your Tenth Portrait: </label>
           <input class="fileUpload" type="file" id="myFile" name="filename" />
-        </div>
-        <input class="fileSubmit" type="submit" />
-      </form>
-    </div>
-  </body>
+        </div> -->
+      <input class="fileSubmit" type="submit" />
+    </form>
+  </div>
+</body>
+
 </html>
