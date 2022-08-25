@@ -7,7 +7,7 @@
     background-color: rgb(23, 73, 73);
 }
 h1{
-    width: 800px;
+    width: 100%;
     margin: auto;
     font-size: 20px;
     margin-top: 50px;
@@ -31,4 +31,17 @@ form{
 .bbutton{
     width: 100px;
     margin: auto;
+    margin-left: 70px;
+}
+.imgSize{
+    width: 200px;
+    margin-top: 100px;
+    margin-left: 100px;
+}
+.verifiedBox{
+
+}
+h2{
+    font-size: 25px;
+
 }
