@@ -1,0 +1,50 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.formBox{
+    background-color: #fff;
+    width: 500px;
+    margin: auto;
+    margin-top: 200px;
+    text-align: center;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 1px 1px 1px 1px whitesmoke;
+
+}
+body{
+    background-color: #eee;
+}
+.textBox{
+    color: rgb(87, 87, 87);
+}
+.inforBox{
+    margin-bottom: 20px;
+    
+}
+.actionBox{
+
+}
+.faceID{
+    width: 250px;
+    margin-bottom: 30px;
+}
+.activeBox{
+    display: inline;
+}
+.fileUpload{
+    width: 200px;
+}
+.uploadBox{
+
+}
+.fileSubmit{
+    width: 100px;
+    margin-top: 30px;
+    height: 25px;
+    background-color: #eee;
+    border-radius: 10px;
+}
