@@ -22,41 +22,49 @@ def openScan():
 
 def gen():
     """Create lists to store image"""
-    rootdir = 'C:\\Face-and-Card-Recognition---ISYS2101\\web test\\user_data'
-    for subdir, dirs, files in os.walk(rootdir):
-        for subdir in dirs:
-            path = os.path.join(rootdir, subdir, 'image')
-            print(f'{str(path)}')
-    # path = 'user_data/s3879300'  # file path
-    images = []
-    classNames = []
-    myList = os.listdir(path)  # read file in path
-    getName = []  # get name of the image
-    print(myList)
+    encodeListKnown = ""
+    path = ""
+    rootdir = 'user_data'
+    for file in os.listdir(rootdir):
+        d = os.path.join(rootdir, file)
+        if os.path.isdir(d):
+            current_path = f"{str(os.path.join(d, 'image'))}"
+            print(current_path)
+            path = current_path.replace('\\', "/")
+            print(path)
 
-    """Loop through myList"""
-    for img in myList:
-        currentImg = cv2.imread(f'{path}/{img}')  # read each image in the folder
-        images.append(currentImg)  # append to the images list
-        classNames.append(os.path.splitext(img)[0])  # split text to get the name of the image
-    print(classNames)
+        # path = 'user_data/s3879300'  # file path
+        images = []
+        classNames = []
+        myList = os.listdir(path)  # read file in path
+        getName = []  # get name of the image
+        print(myList)
 
-    """Loop through classNames list"""
-    for name in classNames:
-        res = re.sub(' \d+', " ", name)  # delete numeric characters in image name
-        getName.append(res)  # append to getName list
-    print(getName)
+        """Loop through myList"""
+        for img in myList:
+            currentImg = cv2.imread(f'{path}/{img}')  # read each image in the folder
+            images.append(currentImg)  # append to the images list
+            classNames.append(os.path.splitext(img)[0])  # split text to get the name of the image
+        print(classNames)
 
-    """function to encode all of the images in images list"""
+        """Loop through classNames list"""
+        for name in classNames:
+            res = re.sub('..$', "", name)  # delete numeric characters in image name
+            getName.append(res)  # append to getName list
+        print(getName)
 
-    def findEncoding(images):
-        encodeList = []  # create new list
-        for img in images:  # loop through images list
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # convert to cvtColor file
-            encode = face_recognition.face_encodings(img)[0]  # encode the cvtColor file
-            encodeList.append(encode)  # store in encodeList
-        return encodeList
+        """function to encode all of the images in images list"""
 
+        def findEncoding(images):
+            encodeList = []  # create new list
+            for img in images:  # loop through images list
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # convert to cvtColor file
+                encode = face_recognition.face_encodings(img)[0]  # encode the cvtColor file
+                encodeList.append(encode)  # store in encodeList
+            return encodeList
+
+        encodeListKnown = findEncoding(images)  # call the function
+        print('Encoding Complete')
     """function to record attendance"""
 
     # def recordAttendance(name):
@@ -72,8 +80,8 @@ def gen():
     #             file.writelines(f'\n{name},{dtString}')
     #     file.close()
 
-    encodeListKnown = findEncoding(images)  # call the function
-    print('Encoding Complete')
+    # encodeListKnown = findEncoding(images)  # call the function
+    # print('Encoding Complete')
 
     cap = cv2.VideoCapture(0)
 
@@ -406,7 +414,7 @@ def uploadImage():
 
         if image.filename == '':
             return redirect(request.url)
-        filename = secure_filename(image.filename)
+        filename = sid + "_1.jpg"
         folder_name = sid
         folder = os.path.join('user_data', folder_name, 'image')
         user_info = os.path.join('user_data', folder_name, 'user_info.txt')
@@ -435,7 +443,7 @@ def uploadImage2():
 
         if image.filename == '':
             return redirect(request.url)
-        filename = secure_filename(image.filename)
+        filename = sid + "_2.jpg"
         folder_name = sid
         folder = os.path.join('user_data', folder_name, 'image')
         image.save(os.path.join(folder, filename))
@@ -457,7 +465,7 @@ def uploadImage3():
 
         if image.filename == '':
             return redirect(request.url)
-        filename = secure_filename(image.filename)
+        filename = sid + "_3.jpg"
         folder_name = sid
         folder = os.path.join('user_data', folder_name, 'image')
         image.save(os.path.join(folder, filename))
@@ -479,7 +487,7 @@ def uploadImage4():
 
         if image.filename == '':
             return redirect(request.url)
-        filename = secure_filename(image.filename)
+        filename = sid + "_4.jpg"
         folder_name = sid
         folder = os.path.join('user_data', folder_name, 'image')
         image.save(os.path.join(folder, filename))
@@ -501,7 +509,7 @@ def uploadImage5():
 
         if image.filename == '':
             return redirect(request.url)
-        filename = secure_filename(image.filename)
+        filename = sid + "_5.jpg"
         folder_name = sid
         folder = os.path.join('user_data', folder_name, 'image')
         image.save(os.path.join(folder, filename))
