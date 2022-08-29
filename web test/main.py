@@ -22,7 +22,12 @@ def openScan():
 
 def gen():
     """Create lists to store image"""
-    path = 'user_data/s3879300'  # file path
+    rootdir = 'C:\\Face-and-Card-Recognition---ISYS2101\\web test\\user_data'
+    for subdir, dirs, files in os.walk(rootdir):
+        for subdir in dirs:
+            path = os.path.join(rootdir, subdir, 'image')
+            print(f'{str(path)}')
+    # path = 'user_data/s3879300'  # file path
     images = []
     classNames = []
     myList = os.listdir(path)  # read file in path
@@ -403,9 +408,12 @@ def uploadImage():
             return redirect(request.url)
         filename = secure_filename(image.filename)
         folder_name = sid
-        folder = os.path.join('user_data', folder_name)
+        folder = os.path.join('user_data', folder_name, 'image')
+        user_info = os.path.join('user_data', folder_name, 'user_info.txt')
         if school == "RMIT UNIVERSITY":
             os.makedirs(folder)
+            with open(user_info, 'w') as file:
+                file.writelines(f'{str(school)}\n{str(sname)}\n{str(sid)}\n{str(exdate)}')
         else:
             return render_template("uploadID.html")
         image.save(os.path.join(folder, filename))
@@ -429,7 +437,7 @@ def uploadImage2():
             return redirect(request.url)
         filename = secure_filename(image.filename)
         folder_name = sid
-        folder = os.path.join('user_data', folder_name)
+        folder = os.path.join('user_data', folder_name, 'image')
         image.save(os.path.join(folder, filename))
         return render_template("uploadYourImage3.html", number=3)
 
@@ -451,7 +459,7 @@ def uploadImage3():
             return redirect(request.url)
         filename = secure_filename(image.filename)
         folder_name = sid
-        folder = os.path.join('user_data', folder_name)
+        folder = os.path.join('user_data', folder_name, 'image')
         image.save(os.path.join(folder, filename))
         return render_template("uploadYourImage4.html", number=2)
 
@@ -473,7 +481,7 @@ def uploadImage4():
             return redirect(request.url)
         filename = secure_filename(image.filename)
         folder_name = sid
-        folder = os.path.join('user_data', folder_name)
+        folder = os.path.join('user_data', folder_name, 'image')
         image.save(os.path.join(folder, filename))
         return render_template("uploadYourImage5.html", number=1)
 
@@ -495,7 +503,7 @@ def uploadImage5():
             return redirect(request.url)
         filename = secure_filename(image.filename)
         folder_name = sid
-        folder = os.path.join('user_data', folder_name)
+        folder = os.path.join('user_data', folder_name, 'image')
         image.save(os.path.join(folder, filename))
         return render_template("homepage.html")
 
