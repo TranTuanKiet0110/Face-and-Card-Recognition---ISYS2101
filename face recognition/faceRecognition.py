@@ -1,5 +1,4 @@
 """Import library"""
-from flask import Flask
 import cv2.cv2 as cv2
 import numpy as np
 import face_recognition
