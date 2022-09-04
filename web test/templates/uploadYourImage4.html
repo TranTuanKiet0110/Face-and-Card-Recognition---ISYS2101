@@ -5,31 +5,34 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="{{ url_for('static',filename='styles/viewEdit.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles/uploadImg.css') }}">
   <link rel="stylesheet" href="viewEdit.css">
   <title>Upload Your Image</title>
 </head>
 
 <body>
-  <div class="uploadBox">
-    <h1 class="textBox textBoxx">Upload Your Image</h1>
-    <p class="descriptBox">
-      <strong>Please Upload your image in many sides <br />
-        The system need at least 5 images from your portrait</strong>
-    </p>
-  </div>
-  <div>
-    <img class="faceID" src="./Image Resources/face-id.png" />
-  </div>
-  <div class="activeBox">
-    <form method="post" action="{{ url_for('uploadImage4') }}" enctype="multipart/form-data">
-      <div class="uploadBox">
-        <label>Upload Your Portrait: </label>
-        <p>Number of image left: {{number}}</p>
-        <input class="fileUpload" type="file" id="file" name="file" />
-      </div>
-      <input class="fileSubmit" type="submit" />
-    </form>
+  <div class="formBox">
+    <div class="inforBox">
+      <h1>Upload Your Image</h1>
+      <p class="textBox">
+        Please upload your image in many sides
+        <br>
+        The system need at least 5 images from your portrait.
+      </p>
+    </div>
+    <div class="actionBox">
+      <img class="faceID"
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Face_ID_logo.svg/1200px-Face_ID_logo.svg.png" />
+    </div>
+    <div class="activeBox">
+      <form method="post" action="{{ url_for('uploadImage4') }}" enctype="multipart/form-data">
+        <div class="uploadBox">
+          <label>Upload Your Fourth Portrait: </label>
+          <input class="fileUpload" type="file" id="file" name="file" />
+        </div>
+        <input class="fileSubmit" type="submit" />
+      </form>
+    </div>
   </div>
 </body>
 

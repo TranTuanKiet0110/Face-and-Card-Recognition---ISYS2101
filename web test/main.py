@@ -16,6 +16,10 @@ app.config['IMAGE_UPLOADS'] = 'C:\Face-and-Card-Recognition---ISYS2101\web test\
 def homepage():
     return render_template("homepage.html")
 
+@app.route("/homepage", methods=['POST', "GET"])
+def returnHomepage():
+    return render_template("homepage.html")
+
 @app.route('/faceScan')
 def openScan():
     return render_template("index.html")
@@ -133,7 +137,7 @@ def video_feed():
 def openRegister():
     return render_template("uploadID.html")
 
-@app.route("/uploadID", methods=['POST', "GET"])
+@app.route("/viewID", methods=['POST', "GET"])
 def uploadID():
     if request.method == "POST":
 
@@ -198,7 +202,6 @@ def uploadID():
             exdate = infoList[4][13:29]
         file.close()
         return render_template("viewInfo.html", school=school, sname=sname, sid=sid, exdate=exdate)
-    # return render_template("uploadID.html")
 
 @app.route("/edit", methods=['POST', "GET"])
 def edit():
@@ -214,7 +217,7 @@ def edit():
     file.close()
     return render_template("editInfo.html", school=school, sname=sname, sid=sid, exdate=exdate)
 
-@app.route("/confirm", methods=['POST', 'GET'])
+@app.route("/uploadImage", methods=['POST', 'GET'])
 def confirm():
     with open('save_log.txt', 'r') as file:
         infoConfirmList = []
@@ -230,10 +233,9 @@ def confirm():
     with open('save_log.txt', 'w') as f:
         f.writelines(f'{str(school)}\n{str(sname)}\n{str(sid)}\n{str(exdate)}')
     f.close()
-    num = 5
-    return render_template('uploadYourImage.html', number=num)
+    return render_template('uploadYourImage.html')
 
-@app.route("/confirm1", methods=['POST', 'GET'])
+@app.route("/uploadImg", methods=['POST', 'GET'])
 def confirm1():
     with open('save_log.txt', 'r') as file:
         infoDataList = []
@@ -248,8 +250,7 @@ def confirm1():
     with open('save_log.txt', 'w') as file:
         file.writelines(f'{str(school)}\n{str(sname)}\n{str(sid)}\n{str(exdate)}')
     file.close()
-    num = 5
-    return render_template('uploadYourImage.html', number=num)
+    return render_template('uploadYourImage.html')
 
 @app.route("/editForm", methods=['POST'])
 def editForm():
@@ -330,7 +331,7 @@ def editSecond():
     file.close()
     return render_template("editInfoSecond.html", school=school, sname=sname, sid=sid, exdate=exdate)
 
-@app.route("/editFormSecond", methods=['POST'])
+@app.route("/viewEdit", methods=['POST'])
 def editFormSecond():
     with open('save_log.txt', 'r') as file:
         oldInfoList = []
@@ -395,7 +396,7 @@ def editFormSecond():
     file.close()
     return render_template("viewInfoSecond.html", school=school, sname=sname, sid=sid, exdate=exdate)
 
-@app.route("/uploadImage", methods=['POST', "GET"])
+@app.route("/uploadImage2", methods=['POST', "GET"])
 def uploadImage():
     with open('save_log.txt', 'r') as file:
         newInfoList = []
@@ -425,9 +426,9 @@ def uploadImage():
         else:
             return render_template("uploadID.html")
         image.save(os.path.join(folder, filename))
-        return render_template("uploadYourImage2.html", number=4)
+        return render_template("uploadYourImage2.html")
 
-@app.route("/uploadImage2", methods=['POST', "GET"])
+@app.route("/uploadImage3", methods=['POST', "GET"])
 def uploadImage2():
     with open('save_log.txt', 'r') as file:
         newInfoList = []
@@ -447,9 +448,9 @@ def uploadImage2():
         folder_name = sid
         folder = os.path.join('user_data', folder_name, 'image')
         image.save(os.path.join(folder, filename))
-        return render_template("uploadYourImage3.html", number=3)
+        return render_template("uploadYourImage3.html")
 
-@app.route("/uploadImage3", methods=['POST', "GET"])
+@app.route("/uploadImage4", methods=['POST', "GET"])
 def uploadImage3():
     with open('save_log.txt', 'r') as file:
         newInfoList = []
@@ -469,9 +470,9 @@ def uploadImage3():
         folder_name = sid
         folder = os.path.join('user_data', folder_name, 'image')
         image.save(os.path.join(folder, filename))
-        return render_template("uploadYourImage4.html", number=2)
+        return render_template("uploadYourImage4.html")
 
-@app.route("/uploadImage4", methods=['POST', "GET"])
+@app.route("/uploadImage5", methods=['POST', "GET"])
 def uploadImage4():
     with open('save_log.txt', 'r') as file:
         newInfoList = []
@@ -491,9 +492,9 @@ def uploadImage4():
         folder_name = sid
         folder = os.path.join('user_data', folder_name, 'image')
         image.save(os.path.join(folder, filename))
-        return render_template("uploadYourImage5.html", number=1)
+        return render_template("uploadYourImage5.html")
 
-@app.route("/uploadImage5", methods=['POST', "GET"])
+@app.route("/successfullyRegister", methods=['POST', "GET"])
 def uploadImage5():
     with open('save_log.txt', 'r') as file:
         newInfoList = []
@@ -513,7 +514,7 @@ def uploadImage5():
         folder_name = sid
         folder = os.path.join('user_data', folder_name, 'image')
         image.save(os.path.join(folder, filename))
-        return render_template("homepage.html")
+        return render_template("verifySuccessful.html")
 
 if __name__ == '__main__':
     app.run(host='localhost', port=5500, debug=True)
