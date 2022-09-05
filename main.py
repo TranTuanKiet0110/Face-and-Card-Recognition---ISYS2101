@@ -23,52 +23,40 @@ def returnHomepage():
 @app.route('/faceScan')
 def openScan():
     return render_template("index.html")
-
+encodeListKnown = ""
 def gen():
     """Create lists to store image"""
-    encodeListKnown = ""
-    path = ""
-    rootdir = 'user_data'
-    for file in os.listdir(rootdir):
-        d = os.path.join(rootdir, file)
-        if os.path.isdir(d):
-            current_path = f"{str(os.path.join(d, 'image'))}"
-            print(current_path)
-            path = current_path.replace('\\', "/")
-            print(path)
+    path = "user_image"
+    images = []
+    classNames = []
+    myList = os.listdir(path)  # read file in path
+    getName = []  # get name of the image
 
-        # path = 'user_data/s3879300'  # file path
-        images = []
-        classNames = []
-        myList = os.listdir(path)  # read file in path
-        getName = []  # get name of the image
-        print(myList)
+    """Loop through myList"""
+    for img in myList:
+        currentImg = cv2.imread(f'{path}/{img}')  # read each image in the folder
+        images.append(currentImg)  # append to the images list
+        classNames.append(os.path.splitext(img)[0])  # split text to get the name of the image
 
-        """Loop through myList"""
-        for img in myList:
-            currentImg = cv2.imread(f'{path}/{img}')  # read each image in the folder
-            images.append(currentImg)  # append to the images list
-            classNames.append(os.path.splitext(img)[0])  # split text to get the name of the image
-        print(classNames)
+    """Loop through classNames list"""
+    for name in classNames:
+        res = re.sub('..$', "", name)  # delete numeric characters in image name
+        getName.append(res)  # append to getName list
+    print(getName)
 
-        """Loop through classNames list"""
-        for name in classNames:
-            res = re.sub('..$', "", name)  # delete numeric characters in image name
-            getName.append(res)  # append to getName list
-        print(getName)
+    """function to encode all of the images in images list"""
 
-        """function to encode all of the images in images list"""
+    def findEncoding(images):
+        encodeList = []  # create new list
+        for img in images:  # loop through images list
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # convert to cvtColor file
+            encode = face_recognition.face_encodings(img)[0]  # encode the cvtColor file
+            encodeList.append(encode)  # store in encodeList
+        return encodeList
 
-        def findEncoding(images):
-            encodeList = []  # create new list
-            for img in images:  # loop through images list
-                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # convert to cvtColor file
-                encode = face_recognition.face_encodings(img)[0]  # encode the cvtColor file
-                encodeList.append(encode)  # store in encodeList
-            return encodeList
+    encodeListKnown = findEncoding(images)  # call the function
+    print('Encoding Complete')
 
-        encodeListKnown = findEncoding(images)  # call the function
-        print('Encoding Complete')
 
     cap = cv2.VideoCapture(0)
     known = []
@@ -87,9 +75,7 @@ def gen():
                                                      encodeFace)  # find matches image with the person in the webcam
             faceDis = face_recognition.face_distance(encodeListKnown,
                                                      encodeFace)  # find face distance; the small the faceDis is, the more it matched
-            print(faceDis)
             matchIndex = np.argmin(faceDis)
-
 
             if matches[matchIndex]:
                 name = getName[matchIndex].upper()  # get username which is the name of the image
@@ -139,6 +125,7 @@ def gen():
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + open('demo.jpg', 'rb').read() + b'\r\n')
 
+
 @app.route('/video_feed')
 def video_feed():
     return Response(gen(),
@@ -169,7 +156,7 @@ def uploadID():
         text = pytesseract.image_to_string(img)  # scan text on image
 
         """write into text file"""
-        with open('save_log.txt', 'a+') as file:
+        with open('save_log.txt', 'w') as file:
             file.writelines(f'{str(text)}')
         file.close()
 
@@ -203,7 +190,7 @@ def uploadID():
         f.close()
 
         with open('save_log.txt', 'r') as file:
-            infoList = []
+            infoList = []*4
             for line in file:
                 strip_lines = line.strip()
                 infoList.append(strip_lines)
@@ -455,10 +442,9 @@ def uploadImage2():
 
         if image.filename == '':
             return redirect(request.url)
-        filename = sid + "_2.jpg"
+        filename = sid + "_1.jpg"
         folder_name = sid
-        folder = os.path.join('user_data', folder_name, 'image')
-        image.save(os.path.join(folder, filename))
+        image.save(os.path.join('user_image', filename))
         return render_template("uploadYourImage3.html")
 
 @app.route("/uploadImage4", methods=['POST', "GET"])
@@ -477,10 +463,10 @@ def uploadImage3():
 
         if image.filename == '':
             return redirect(request.url)
-        filename = sid + "_3.jpg"
+        filename = sid + "_2.jpg"
         folder_name = sid
         folder = os.path.join('user_data', folder_name, 'image')
-        image.save(os.path.join(folder, filename))
+        image.save(os.path.join('user_image', filename))
         return render_template("uploadYourImage4.html")
 
 @app.route("/uploadImage5", methods=['POST', "GET"])
@@ -499,10 +485,9 @@ def uploadImage4():
 
         if image.filename == '':
             return redirect(request.url)
-        filename = sid + "_4.jpg"
+        filename = sid + "_3.jpg"
         folder_name = sid
-        folder = os.path.join('user_data', folder_name, 'image')
-        image.save(os.path.join(folder, filename))
+        image.save(os.path.join('user_image', filename))
         return render_template("uploadYourImage5.html")
 
 @app.route("/successfullyRegister", methods=['POST', "GET"])
@@ -521,10 +506,8 @@ def uploadImage5():
 
         if image.filename == '':
             return redirect(request.url)
-        filename = sid + "_5.jpg"
-        folder_name = sid
-        folder = os.path.join('user_data', folder_name, 'image')
-        image.save(os.path.join(folder, filename))
+        filename = sid + "_4.jpg"
+        image.save(os.path.join('user_image', filename))
         return render_template("verifySuccessful.html")
 
 if __name__ == '__main__':
