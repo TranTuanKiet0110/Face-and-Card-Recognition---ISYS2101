@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Register Your Account</title>
+</head>
+
+<body>
+    <div class="registerBox">
+        <h1 class="h1Design">Register Your Account</h1>
+        <p class="textDes">Please Upload Your student Number Card</p>
+        <form class="formBox" method="post" action="{{ url_for('uploadID') }}" enctype="multipart/form-data">
+            <p>
+                <input class="fileUploadBox" type="file" name="file" autocomplete="off" required>
+            </p>
+            <p>
+                <input class="submitBox btn btn-secondary" type="submit" value="Submit">
+            </p>
+        </form>
+    </div>
+</body>
+
+</html>
