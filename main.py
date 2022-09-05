@@ -10,7 +10,7 @@ import face_recognition
 import datetime
 app = Flask(__name__)
 
-app.config['IMAGE_UPLOADS'] = 'C:\Face-and-Card-Recognition---ISYS2101\web test\static\image'
+app.config['IMAGE_UPLOADS'] = 'C:\Face-and-Card-Recognition---ISYS2101\static\image'
 
 @app.route("/", methods=['POST', "GET"])
 def homepage():
@@ -69,26 +69,9 @@ def gen():
 
         encodeListKnown = findEncoding(images)  # call the function
         print('Encoding Complete')
-    """function to record attendance"""
-
-    # def recordAttendance(name):
-    #     with open('attendance.csv', 'r+') as file:
-    #         myDataList = file.readlines()
-    #         nameList = []
-    #         for line in myDataList:
-    #             entry = line.split(',')
-    #             nameList.append(entry[0])
-    #         if name not in nameList:
-    #             now = datetime.datetime.now()
-    #             dtString = now.strftime('%H:%M:%S')
-    #             file.writelines(f'\n{name},{dtString}')
-    #     file.close()
-
-    # encodeListKnown = findEncoding(images)  # call the function
-    # print('Encoding Complete')
 
     cap = cv2.VideoCapture(0)
-
+    known = []
     while True:
         ret, frame = cap.read()
 
@@ -107,6 +90,7 @@ def gen():
             print(faceDis)
             matchIndex = np.argmin(faceDis)
 
+
             if matches[matchIndex]:
                 name = getName[matchIndex].upper()  # get username which is the name of the image
                 print(name)
@@ -119,6 +103,33 @@ def gen():
                             2)  # write the user name below the rectang
                 # recordAttendance(name)  # call the attendance function
 
+                if name not in known:
+                    known.append(name)
+                    user_info = os.path.join('user_data', name, 'user_info.txt')
+                    with open(user_info, 'r') as file:
+                        infoList = []
+                        for line in file:
+                            strip_lines = line.strip()
+                            infoList.append(strip_lines)
+                        sname = infoList[1]
+                        sid = infoList[2]
+                    file.close()
+                    with open("currentLog.txt", 'a+') as file:
+                        now = datetime.datetime.now()
+                        dtString = now.strftime('%H:%M:%S')
+                        file.writelines(f"\n{str(sid)},{str(sname)},{str(dtString)}")
+                    file.close()
+                    output = ""
+                    with open("currentLog.txt", "r+") as file:
+                        for line in file:
+                            if not line.isspace():
+                                output += line
+                    file.close()
+                    today = datetime.date.today()
+                    log = os.path.join('log', 'recordAttendance ' + str(today) + '.txt')
+                    with open(log, "a+") as file:
+                        file.writelines(output)
+                    file.close()
         if not ret:
             print("Error: failed to capture image")
             break
@@ -158,7 +169,7 @@ def uploadID():
         text = pytesseract.image_to_string(img)  # scan text on image
 
         """write into text file"""
-        with open('save_log.txt', 'w') as file:
+        with open('save_log.txt', 'a+') as file:
             file.writelines(f'{str(text)}')
         file.close()
 
