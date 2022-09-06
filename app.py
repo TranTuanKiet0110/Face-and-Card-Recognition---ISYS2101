@@ -190,14 +190,40 @@ def uploadID():
         f.close()
 
         with open('save_log.txt', 'r') as file:
-            infoList = []*4
+            infoList = []
             for line in file:
                 strip_lines = line.strip()
                 infoList.append(strip_lines)
-            school = infoList[0] + ' ' + infoList[1]
-            sname = infoList[2]
-            sid = "s" + infoList[3]
-            exdate = infoList[4][13:29]
+            if len(infoList) == 0:
+                school = "None"
+                sname = "None"
+                sid = "None"
+                exdate = "None"
+            elif len(infoList) == 1:
+                school = "None"
+                sname = "None"
+                sid = "None"
+                exdate = "None"
+            elif len(infoList) == 2:
+                school = infoList[0] + ' ' + infoList[1]
+                sname = "None"
+                sid = "None"
+                exdate = "None"
+            elif len(infoList) == 3:
+                school = infoList[0] + ' ' + infoList[1]
+                sname = infoList[2]
+                sid = "None"
+                exdate = "None"
+            elif len(infoList) == 4:
+                school = infoList[0] + ' ' + infoList[1]
+                sname = infoList[2]
+                sid = "s" + infoList[3]
+                exdate = "None"
+            else:
+                school = infoList[0] + ' ' + infoList[1]
+                sname = infoList[2]
+                sid = "s" + infoList[3]
+                exdate = infoList[4][13:29]
         file.close()
         return render_template("viewInfo.html", school=school, sname=sname, sid=sid, exdate=exdate)
 
