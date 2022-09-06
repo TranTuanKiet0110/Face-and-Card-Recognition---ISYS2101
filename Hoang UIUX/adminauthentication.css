@@ -62,3 +62,55 @@
   color: white;
   text-align: center;
 }
+
+.imgDesign{
+    width: 200px;
+    margin: auto;
+}
+.imgBox{
+    width: 200px;
+    margin: auto;
+    margin-top: 100px;
+}
+.imgBox p{
+    width: 300px;
+    margin-top: 20px;
+    color: rgb(63, 63, 62);
+    font-size: 18px;
+}
+.printOption{
+    width: 500px;
+    margin: auto;
+    font-size: 24px;
+    margin-top: 30px;
+}
+
+.printButton{
+    padding: 5px;
+    border-radius: 15px;
+    background-color: #d10606;
+    color: white;
+    border: 1px solid white;
+}
+.printButton:hover{
+    padding: 7px;
+    border-radius: 15px;
+    background-color: #d10606;
+    color: white;
+    border: 1px solid rgb(161, 161, 161);
+    box-shadow: 5px 5px 4px 1px rgb(206, 205, 205);
+}
+.informationBox{
+    width: 400px;
+    background-color: #d10606;
+    margin: auto;
+    margin-top: 50px;
+    padding: 20px;
+    border-radius: 25px;
+    box-shadow: 4px 4px 4px 4px whitesmoke;
+    color: white;
+}
+.inputBox{
+    margin-left: 30px;
+}
+
