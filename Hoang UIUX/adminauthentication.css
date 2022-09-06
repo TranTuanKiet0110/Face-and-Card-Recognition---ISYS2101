@@ -1,0 +1,64 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.adminName{
+    width: 120px;
+    margin-left: 30px;
+    margin-top: 30px;
+    padding: 5px;
+    text-align: center;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    background-color: #d10606;
+    box-shadow: 1px 1px 1px 1px rgb(216, 216, 216);
+    color: aliceblue;
+}
+.tableDesign{
+    margin-left: 30px;
+    padding: 20px;
+    justify-content: center;
+    margin-right: 30px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+.tableDesign th{
+    border: 1px solid black;
+    text-align: center;
+    width: 800px;
+    margin: auto;
+    margin-left: 20px;
+    background-color: #d10606;
+    color: white;
+}
+.tableDesign tr td {
+    border: 1px solid black;
+}
+#customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #customers tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #customers tr:hover {background-color: #ddd;}
+  
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #d10606;
+    color: white;
+  }
+.footer{
+    position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 8px;
+  background-color: rgb(138, 136, 136);
+  color: white;
+  text-align: center;
+}
