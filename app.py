@@ -141,8 +141,8 @@ def uploadID():
 
         image = request.files['file']
 
-        pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'  # pytesseract location
-
+        # pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'  # pytesseract location
+        pytesseract.pytesseract.tesseract_cmd = '/app/.apt/usr/bin/tesseract'  # pytesseract location
         if image.filename == '':
             return redirect(request.url)
 
