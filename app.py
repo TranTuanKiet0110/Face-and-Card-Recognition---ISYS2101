@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 app.config['IMAGE_UPLOADS'] = 'C:\Face-and-Card-Recognition---ISYS2101\static\image'
 
-@app.route("/", methods=['POST', "GET"])
+@app.route("/")
 def homepage():
     return render_template("homepage.html")
 
