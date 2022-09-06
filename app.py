@@ -22,7 +22,7 @@ def returnHomepage():
 
 @app.route('/faceScan')
 def openScan():
-    return render_template("index.html")
+    return render_template("faceID.html")
 encodeListKnown = ""
 def gen():
     """Create lists to store image"""
@@ -91,6 +91,7 @@ def gen():
 
                 if name not in known:
                     known.append(name)
+                    print(known)
                     user_info = os.path.join('user_data', name, 'user_info.txt')
                     with open(user_info, 'r') as file:
                         infoList = []
@@ -100,22 +101,24 @@ def gen():
                         sname = infoList[1]
                         sid = infoList[2]
                     file.close()
-                    with open("currentLog.txt", 'a+') as file:
+                    today = datetime.date.today()
+                    log = os.path.join('log', 'recordAttendance ' + str(today) + '.txt')
+                    with open(log, 'a+') as file:
                         now = datetime.datetime.now()
                         dtString = now.strftime('%H:%M:%S')
                         file.writelines(f"\n{str(sid)},{str(sname)},{str(dtString)}")
                     file.close()
-                    output = ""
-                    with open("currentLog.txt", "r+") as file:
-                        for line in file:
-                            if not line.isspace():
-                                output += line
-                    file.close()
-                    today = datetime.date.today()
-                    log = os.path.join('log', 'recordAttendance ' + str(today) + '.txt')
-                    with open(log, "a+") as file:
-                        file.writelines(output)
-                    file.close()
+                    # output = ""
+                    # with open("currentLog.txt", "r+") as file:
+                    #     for line in file:
+                    #         if not line.isspace():
+                    #             output += line
+                    # file.close()
+                    # today = datetime.date.today()
+                    # log = os.path.join('log', 'recordAttendance ' + str(today) + '.txt')
+                    # with open(log, "a+") as file:
+                    #     file.writelines(output)
+                    # file.close()
         if not ret:
             print("Error: failed to capture image")
             break

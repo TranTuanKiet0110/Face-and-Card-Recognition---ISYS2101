@@ -21,14 +21,21 @@ body{
 }
 .boxCam{
     width: 700px;
+    margin-bottom: 100px;
     margin: auto;
+    overflow: hidden;
     margin-top: 50px;
     border-radius: 10px;
-    padding: 10px;
-    height: 700px;
+    height: auto;
     background-color: #fff;
     box-shadow: 2px 2px 2px 2px rgb(168, 168, 168);
 }
 .textCam{
     text-align: center;
+}
+.camBox{
+}
+.blockBox{
+    color: white;
+    height: 50px;
 }
