@@ -41,3 +41,11 @@ s3804620,Tran Huy Khanh,14:08:48
 s3879300,Tran Tuan Kiet,14:12:53
 s3879300,Tran Tuan Kiet,14:13:12
 s3879300,Tran Tuan Kiet,14:13:30
+s3879300,Tran Tuan Kiet,14:25:55
+s3879300,Tran Tuan Kiet,14:26:22
+s3879300,Tran Tuan Kiet,14:26:58
+s3804620,Tran Huy Khanh,14:26:59
+s3879300,Tran Tuan Kiet,14:28:28
+s3879300,Tran Tuan Kiet,14:29:25
+s3879300,Tran Tuan Kiet,14:30:03
+s3879300,Tran Tuan Kiet,14:31:23

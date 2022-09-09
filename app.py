@@ -3,12 +3,10 @@ import os
 import pytesseract
 from PIL import Image
 import re
-from werkzeug.utils import secure_filename
 import cv2.cv2 as cv2
 import numpy as np
 import face_recognition
 import datetime
-from time import sleep
 app = Flask(__name__)
 
 app.config['IMAGE_UPLOADS'] = 'C:\Face-and-Card-Recognition---ISYS2101\static\image'
@@ -27,7 +25,6 @@ def returnHomepage():
 
 @app.route('/login')
 def openLogin():
-    sleep(5)
     return render_template("LogInLogOut.html")
 
 @app.route('/successValidation', methods=['POST', "GET"])
@@ -51,8 +48,6 @@ def confirmLogin():
         exdate = infoDataList[3]
     file.close()
     return render_template("successValidation.html", school=school, sname=sname, sid=sid, exdate=exdate)
-    # time.sleep(10)
-
 
 @app.route('/faceScan')
 def openScan():
@@ -122,8 +117,7 @@ def gen():
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
                 cv2.rectangle(frame, (x1, y2 - 35), (x2, y2), (0, 255, 0), cv2.FILLED)
                 cv2.putText(frame, name, (x1 + 6, y2 - 6), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255),
-                            2)  # write the user name below the rectang
-                # recordAttendance(name)  # call the attendance function
+                            2)  # write the user name below the rectangle
 
                 if name not in known:
                     known.append(name)
@@ -166,6 +160,7 @@ def gen():
         cv2.waitKey(1)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + open('demo.jpg', 'rb').read() + b'\r\n')
+
 @app.route('/video_feed')
 def video_feed():
     return Response(gen(),

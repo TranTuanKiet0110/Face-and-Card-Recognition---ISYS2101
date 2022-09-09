@@ -1,4 +1,4 @@
-setTimeout("CallButton()",3000)
+setTimeout("CallButton()",10000)
 function CallButton()
 {
    document.getElementById("button1").click();   
