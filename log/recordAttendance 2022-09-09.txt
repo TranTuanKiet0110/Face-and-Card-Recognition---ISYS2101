@@ -27,3 +27,17 @@ s3879300,Tran Tuan Kiet,11:51:38
 s3879300,Tran Tuan Kiet,11:52:42
 s3879300,Tran Tuan Kiet,11:52:57
 s3879300,Tran Tuan Kiet,11:53:05
+s3804620,Tran Huy Khanh,11:58:21
+s3879300,Tran Tuan Kiet,13:16:42
+s3879300,Tran Tuan Kiet,13:33:08
+s3879300,Tran Tuan Kiet,13:34:25
+s3879300,Tran Tuan Kiet,13:41:01
+s3879300,Tran Tuan Kiet,13:43:29
+s3879300,Tran Tuan Kiet,14:05:45
+s3879300,Tran Tuan Kiet,14:07:33
+s3879300,Tran Tuan Kiet,14:07:57
+s3879300,Tran Tuan Kiet,14:08:32
+s3804620,Tran Huy Khanh,14:08:48
+s3879300,Tran Tuan Kiet,14:12:53
+s3879300,Tran Tuan Kiet,14:13:12
+s3879300,Tran Tuan Kiet,14:13:30

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Success Validation</title>
     <link rel="stylesheet" href="./adminauthentication.css">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/viewEdit.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='styles/adminauthentication.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -26,43 +27,51 @@
                     <a class="nav-link" href="{{ url_for('openScan') }}">Face ID <span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('openRegister') }}">Register An Account <span class="sr-only"></span></a>
+                    <a class="nav-link" href="{{ url_for('openRegister') }}">Register An Account <span
+                            class="sr-only"></span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('openLogin') }}">Admin Management <span class="sr-only"></span></a>
+                    <a class="nav-link" href="{{ url_for('openLogin') }}">Admin Management <span
+                            class="sr-only"></span></a>
                 </li>
 
             </ul>
         </div>
     </nav>
     <div class="imgBox">
-        <img class="imgDesign" src="https://atcgroupservices.com/wp-content/uploads/2017/09/ATC-Icons-RED_0000s_0004_checkbox.png">
+        <img class="imgDesign"
+            src="https://atcgroupservices.com/wp-content/uploads/2017/09/ATC-Icons-RED_0000s_0004_checkbox.png">
         <br>
         <p>Verified Face Successfully!</p>
     </div>
     <div class="informationBox">
         <div class="inputBox">
-          <label>Your School: {{school}}</label>
+            <label>Your School: {{school}}</label>
         </div>
         <div class="inputBox">
-          <label>Your Fullname: {{sname}}</label>
+            <label>Your Fullname: {{sname}}</label>
         </div>
         <div class="inputBox">
-          <label>Your Student Number: {{sid}}</label>
+            <label>Your Student Number: {{sid}}</label>
         </div>
         <div class="inputBox">
-          <label>Your Expiry Date: {{exdate}}</label>
+            <label>Your Expiry Date: {{exdate}}</label>
         </div>
-      </div>
-      <div class="printOption">
+    </div>
+    <form class="buttonBox" method="post" enctype="multipart/form-data">
+        <div>
+            <a class="button1" href="{{ url_for('backfaceID') }}" id="button1" style="text-decoration: none;">Back to Homepage (5s)</a>
+        </div>
+    </form>
+    <div class="printOption">
         Print your temporary <button class="printButton">student number card</button>
     </div>
-
     <footer>
         <div class="footer">
             Copyright @ FCVS Project
         </div>
     </footer>
+    <script src="{{url_for('static', filename='scripts/autoClick.js')}}"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

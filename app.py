@@ -17,12 +17,17 @@ app.config['IMAGE_UPLOADS'] = 'C:\Face-and-Card-Recognition---ISYS2101\static\im
 def homepage():
     return render_template("homepage.html")
 
+@app.route("/newFaceScan", methods=['POST', "GET"])
+def backfaceID():
+    return render_template("faceID.html")
+
 @app.route("/homepage", methods=['POST', "GET"])
 def returnHomepage():
     return render_template("homepage.html")
 
 @app.route('/login')
 def openLogin():
+    sleep(5)
     return render_template("LogInLogOut.html")
 
 @app.route('/successValidation', methods=['POST', "GET"])
@@ -46,6 +51,8 @@ def confirmLogin():
         exdate = infoDataList[3]
     file.close()
     return render_template("successValidation.html", school=school, sname=sname, sid=sid, exdate=exdate)
+    # time.sleep(10)
+
 
 @app.route('/faceScan')
 def openScan():
