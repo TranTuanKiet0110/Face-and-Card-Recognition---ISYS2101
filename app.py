@@ -26,7 +26,14 @@ def openLogin():
     return render_template("LogInLogOut.html")
 
 @app.route('/successValidation', methods=['POST', "GET"])
-def confirmLogin(name):
+def confirmLogin():
+    with open("current_name.txt", 'r+') as file:
+        infoDataList = []
+        for line in file:
+            strip_lines = line.strip()
+            infoDataList.append(strip_lines)
+        name = infoDataList[0].replace('ÿþ', '')
+    file.close()
     required_data = os.path.join('user_data', name, 'user_info.txt')
     with open(required_data, 'r+') as file:
         infoDataList = []
@@ -90,7 +97,7 @@ def gen():
         faceCurrentFrame = face_recognition.face_locations(imgSmall)  # find the face location
         encodeCurrentFrame = face_recognition.face_encodings(imgSmall,
                                                              faceCurrentFrame)  # encode the current frame capture by webcam
-        current_name = ""
+        current_name = []
         for encodeFace, faceLoc in zip(encodeCurrentFrame, faceCurrentFrame):
             matches = face_recognition.compare_faces(encodeListKnown,
                                                      encodeFace)  # find matches image with the person in the webcam
@@ -101,7 +108,7 @@ def gen():
             if matches[matchIndex]:
                 name = getName[matchIndex].upper()  # get username which is the name of the image
                 print(name)
-                current_name = f"{str(name)}"
+                current_name.append(name)
                 """draw rectangle around the face location on the webcam screen"""
                 y1, x2, y2, x1 = faceLoc
                 y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4  # the webcam image is resized above so we have to multiply by 4
@@ -121,6 +128,9 @@ def gen():
                             infoList.append(strip_lines)
                         sname = infoList[1]
                         sid = infoList[2]
+                    file.close()
+                    with open('current_name.txt', 'w') as file:
+                        file.writelines(f"{str(current_name[0])}")
                     file.close()
                     today = datetime.date.today()
                     log = os.path.join('log', 'recordAttendance ' + str(today) + '.txt')
@@ -149,7 +159,6 @@ def gen():
         cv2.waitKey(1)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + open('demo.jpg', 'rb').read() + b'\r\n')
-    confirmLogin(current_name)
 @app.route('/video_feed')
 def video_feed():
     return Response(gen(),
