@@ -25,6 +25,21 @@ def returnHomepage():
 def openLogin():
     return render_template("LogInLogOut.html")
 
+@app.route('/successValidation', methods=['POST', "GET"])
+def confirmLogin(name):
+    required_data = os.path.join('user_data', name, 'user_info.txt')
+    with open(required_data, 'r+') as file:
+        infoDataList = []
+        for line in file:
+            strip_lines = line.strip()
+            infoDataList.append(strip_lines)
+        school = infoDataList[0]
+        sname = infoDataList[1]
+        sid = infoDataList[2]
+        exdate = infoDataList[3]
+    file.close()
+    return render_template("successValidation.html", school=school, sname=sname, sid=sid, exdate=exdate)
+
 @app.route('/faceScan')
 def openScan():
     return render_template("faceID.html")
@@ -75,7 +90,7 @@ def gen():
         faceCurrentFrame = face_recognition.face_locations(imgSmall)  # find the face location
         encodeCurrentFrame = face_recognition.face_encodings(imgSmall,
                                                              faceCurrentFrame)  # encode the current frame capture by webcam
-        name = ""
+        current_name = ""
         for encodeFace, faceLoc in zip(encodeCurrentFrame, faceCurrentFrame):
             matches = face_recognition.compare_faces(encodeListKnown,
                                                      encodeFace)  # find matches image with the person in the webcam
@@ -86,6 +101,7 @@ def gen():
             if matches[matchIndex]:
                 name = getName[matchIndex].upper()  # get username which is the name of the image
                 print(name)
+                current_name = f"{str(name)}"
                 """draw rectangle around the face location on the webcam screen"""
                 y1, x2, y2, x1 = faceLoc
                 y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4  # the webcam image is resized above so we have to multiply by 4
@@ -133,19 +149,7 @@ def gen():
         cv2.waitKey(1)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + open('demo.jpg', 'rb').read() + b'\r\n')
-
-        # required_data = os.path.join('user_data', name, 'user_info.txt')
-        # with open(required_data, 'r+') as file:
-        #     infoDataList = []
-        #     for line in file:
-        #         strip_lines = line.strip()
-        #         infoDataList.append(strip_lines)
-        #     school = infoDataList[0]
-        #     sname = infoDataList[1]
-        #     sid = infoDataList[2]
-        #     exdate = infoDataList[3]
-        # file.close()
-
+    confirmLogin(current_name)
 @app.route('/video_feed')
 def video_feed():
     return Response(gen(),
@@ -461,7 +465,7 @@ def uploadImage():
             return redirect(request.url)
         filename = sid + "_1.jpg"
         image.save(os.path.join('user_image', filename))
-        folder_name = sid
+        folder_name = sid.upper()
         folder = os.path.join('user_data', folder_name)
         user_info = os.path.join('user_data', folder_name, 'user_info.txt')
         if school == "RMIT UNIVERSITY":
