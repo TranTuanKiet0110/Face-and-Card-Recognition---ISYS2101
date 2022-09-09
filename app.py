@@ -8,6 +8,7 @@ import cv2.cv2 as cv2
 import numpy as np
 import face_recognition
 import datetime
+from time import sleep
 app = Flask(__name__)
 
 app.config['IMAGE_UPLOADS'] = 'C:\Face-and-Card-Recognition---ISYS2101\static\image'
@@ -20,9 +21,14 @@ def homepage():
 def returnHomepage():
     return render_template("homepage.html")
 
+@app.route('/login')
+def openLogin():
+    return render_template("LogInLogOut.html")
+
 @app.route('/faceScan')
 def openScan():
     return render_template("faceID.html")
+
 encodeListKnown = ""
 def gen():
     """Create lists to store image"""
@@ -69,7 +75,7 @@ def gen():
         faceCurrentFrame = face_recognition.face_locations(imgSmall)  # find the face location
         encodeCurrentFrame = face_recognition.face_encodings(imgSmall,
                                                              faceCurrentFrame)  # encode the current frame capture by webcam
-
+        name = ""
         for encodeFace, faceLoc in zip(encodeCurrentFrame, faceCurrentFrame):
             matches = face_recognition.compare_faces(encodeListKnown,
                                                      encodeFace)  # find matches image with the person in the webcam
@@ -91,7 +97,6 @@ def gen():
 
                 if name not in known:
                     known.append(name)
-                    print(known)
                     user_info = os.path.join('user_data', name, 'user_info.txt')
                     with open(user_info, 'r') as file:
                         infoList = []
@@ -108,6 +113,7 @@ def gen():
                         dtString = now.strftime('%H:%M:%S')
                         file.writelines(f"\n{str(sid)},{str(sname)},{str(dtString)}")
                     file.close()
+
                     # output = ""
                     # with open("currentLog.txt", "r+") as file:
                     #     for line in file:
@@ -128,6 +134,17 @@ def gen():
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + open('demo.jpg', 'rb').read() + b'\r\n')
 
+        # required_data = os.path.join('user_data', name, 'user_info.txt')
+        # with open(required_data, 'r+') as file:
+        #     infoDataList = []
+        #     for line in file:
+        #         strip_lines = line.strip()
+        #         infoDataList.append(strip_lines)
+        #     school = infoDataList[0]
+        #     sname = infoDataList[1]
+        #     sid = infoDataList[2]
+        #     exdate = infoDataList[3]
+        # file.close()
 
 @app.route('/video_feed')
 def video_feed():
@@ -423,7 +440,7 @@ def editFormSecond():
     file.close()
     return render_template("viewInfoSecond.html", school=school, sname=sname, sid=sid, exdate=exdate)
 
-@app.route("/uploadImage2", methods=['POST', "GET"])
+@app.route("/successfullyRegister", methods=['POST', "GET"])
 def uploadImage():
     with open('save_log.txt', 'r') as file:
         newInfoList = []
@@ -443,8 +460,9 @@ def uploadImage():
         if image.filename == '':
             return redirect(request.url)
         filename = sid + "_1.jpg"
+        image.save(os.path.join('user_image', filename))
         folder_name = sid
-        folder = os.path.join('user_data', folder_name, 'image')
+        folder = os.path.join('user_data', folder_name)
         user_info = os.path.join('user_data', folder_name, 'user_info.txt')
         if school == "RMIT UNIVERSITY":
             os.makedirs(folder)
@@ -452,91 +470,6 @@ def uploadImage():
                 file.writelines(f'{str(school)}\n{str(sname)}\n{str(sid)}\n{str(exdate)}')
         else:
             return render_template("uploadID.html")
-        image.save(os.path.join(folder, filename))
-        return render_template("uploadYourImage2.html")
-
-@app.route("/uploadImage3", methods=['POST', "GET"])
-def uploadImage2():
-    with open('save_log.txt', 'r') as file:
-        newInfoList = []
-        for line in file:
-            strip_lines = line.strip()
-            newInfoList.append(strip_lines)
-        sid = newInfoList[2]
-    file.close()
-
-    if request.method == "POST":
-
-        image = request.files['file']
-
-        if image.filename == '':
-            return redirect(request.url)
-        filename = sid + "_1.jpg"
-        folder_name = sid
-        image.save(os.path.join('user_image', filename))
-        return render_template("uploadYourImage3.html")
-
-@app.route("/uploadImage4", methods=['POST', "GET"])
-def uploadImage3():
-    with open('save_log.txt', 'r') as file:
-        newInfoList = []
-        for line in file:
-            strip_lines = line.strip()
-            newInfoList.append(strip_lines)
-        sid = newInfoList[2]
-    file.close()
-
-    if request.method == "POST":
-
-        image = request.files['file']
-
-        if image.filename == '':
-            return redirect(request.url)
-        filename = sid + "_2.jpg"
-        folder_name = sid
-        folder = os.path.join('user_data', folder_name, 'image')
-        image.save(os.path.join('user_image', filename))
-        return render_template("uploadYourImage4.html")
-
-@app.route("/uploadImage5", methods=['POST', "GET"])
-def uploadImage4():
-    with open('save_log.txt', 'r') as file:
-        newInfoList = []
-        for line in file:
-            strip_lines = line.strip()
-            newInfoList.append(strip_lines)
-        sid = newInfoList[2]
-    file.close()
-
-    if request.method == "POST":
-
-        image = request.files['file']
-
-        if image.filename == '':
-            return redirect(request.url)
-        filename = sid + "_3.jpg"
-        folder_name = sid
-        image.save(os.path.join('user_image', filename))
-        return render_template("uploadYourImage5.html")
-
-@app.route("/successfullyRegister", methods=['POST', "GET"])
-def uploadImage5():
-    with open('save_log.txt', 'r') as file:
-        newInfoList = []
-        for line in file:
-            strip_lines = line.strip()
-            newInfoList.append(strip_lines)
-        sid = newInfoList[2]
-    file.close()
-
-    if request.method == "POST":
-
-        image = request.files['file']
-
-        if image.filename == '':
-            return redirect(request.url)
-        filename = sid + "_4.jpg"
-        image.save(os.path.join('user_image', filename))
         return render_template("verifySuccessful.html")
 
 if __name__ == '__main__':
