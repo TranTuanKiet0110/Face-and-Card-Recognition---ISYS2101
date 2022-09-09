@@ -487,5 +487,5 @@ def uploadImage():
             return render_template("uploadID.html")
         return render_template("verifySuccessful.html")
 
-# if __name__ == '__main__':
-#     app.run(host='localhost', port=5500, debug=True)
+if __name__ == '__main__':
+    app.run(host='localhost', port=5500, debug=True)
