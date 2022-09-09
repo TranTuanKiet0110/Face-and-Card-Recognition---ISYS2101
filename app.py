@@ -176,8 +176,8 @@ def uploadID():
 
         image = request.files['file']
 
-        pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'  # pytesseract location
-#         pytesseract.pytesseract.tesseract_cmd = '/app/.apt/usr/bin/tesseract'
+#         pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'  # pytesseract location
+        pytesseract.pytesseract.tesseract_cmd = '/app/.apt/usr/bin/tesseract'
         if image.filename == '':
             return redirect(request.url)
 
@@ -487,5 +487,5 @@ def uploadImage():
             return render_template("uploadID.html")
         return render_template("verifySuccessful.html")
 
-if __name__ == '__main__':
-    app.run(host='localhost', port=5500, debug=True)
+# if __name__ == '__main__':
+#     app.run(host='localhost', port=5500, debug=True)
