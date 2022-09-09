@@ -27,7 +27,7 @@
                     <a class="nav-link" href="{{ url_for('openRegister') }}">Register An Account <span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Admin Management <span class="sr-only"></span></a>
+                    <a class="nav-link" href="{{ url_for('openLogin') }}">Admin Management <span class="sr-only"></span></a>
                 </li>
 
             </ul>
@@ -43,7 +43,7 @@
                 <ul class="ulist">
                     <li class="llist"><a class="nav-link" href="{{ url_for('openScan') }} " style="text-decoration: none;">Face ID</a></li>
                     <li class="llist"><a class="nav-link" href="{{ url_for('openRegister') }} " style="text-decoration: none;">Register An Account</a></li>
-                    <li class="llist"><a>Admin Managemnent</a></li>
+                    <li class="llist"><a class="nav-link" href="{{ url_for('openLogin') }}" style="text-decoration: none;">Admin Managemnent</a></li>
                 </ul>
             </div>
         </div>
