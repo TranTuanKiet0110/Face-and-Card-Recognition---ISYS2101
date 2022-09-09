@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="./adminauthentication.css">
     <link rel="stylesheet" href="{{ url_for('static',filename='styles/faceID.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='styles/adminauthentication.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static',filename='styles/viewEdit.css') }}">
     <title>Face ID</title>
 </head>
 <body>
@@ -18,7 +17,7 @@
     </div>
     <div class="boxCam">
         <div class="textCam">
-            <img  class="camBox" src="{{ url_for('video_feed') }}">
+            <img src="{{ url_for('video_feed') }}">
         </div>
     </div>
     <form class="buttonBox" method="post" enctype="multipart/form-data">
@@ -26,9 +25,6 @@
           <a class="button1" href="{{ url_for('confirmLogin') }}" style="text-decoration: none;">Confirm</a>
         </div>
     </form>
-    <div class="blockBox">
-        Block
-    </div>
     <footer>
         <div class="footer">
             Copyright @ FCVS Project
