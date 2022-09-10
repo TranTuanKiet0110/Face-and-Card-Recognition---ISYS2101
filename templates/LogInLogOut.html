@@ -16,10 +16,10 @@
       </div>
       <p class="msg">Welcome back</p>
       <div class="form">
-        <form action="/login" method="POST">
-          <input type="text" placeholder="Username" class="text" name="username" required=""><br>
-          <input type="password" placeholder="Password" class="password" name="password"><br>
-          <p><input type="submit" value="Login" /></p>
+        <form method="post" action="{{ url_for('adminAuth') }}" enctype="multipart/form-data">
+          <input type="text" placeholder="Username" class="text" name="username">
+          <input type="password" placeholder="Password" class="password" name="password">
+          <input type="submit" value="Login" />
           <a href="#" class="forgot">Forgot?</a>
       </form>
       </div>

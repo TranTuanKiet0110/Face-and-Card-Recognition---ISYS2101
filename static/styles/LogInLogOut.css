@@ -49,25 +49,25 @@ body {
     outline: none;
 }
 
-.login .form .text::placeholder {
+/* .login .form .text::placeholder {
     color: #858383;
-}
+} */
 
 .login .form input[type=password].password {
     border: none;
     background: none;
     box-shadow: 0px 2px 0px 0px white;
     width: 100%;
-    color: rgb(110, 110, 110);
+    color: white;
     font-size: 1em;
     outline: none;
     margin-bottom: 20px;
     margin-top: 20px;
 }
 
-.login .form .password::placeholder {
+/* .login .form .password::placeholder {
     color: #D3D3D3;
-}
+} */
 
 .login .form .btn-login {
     background: none;

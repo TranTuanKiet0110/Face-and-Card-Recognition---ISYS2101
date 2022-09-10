@@ -24,13 +24,13 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link" href="">Face ID <span class="sr-only"></span></a>
+                    <a class="nav-link" href="{{ url_for('openScan') }}">Face ID <span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="">Register An Account <span class="sr-only"></span></a>
+                    <a class="nav-link" href="{{ url_for('openRegister') }}">Register An Account <span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Admin Management <span class="sr-only"></span></a>
+                    <a class="nav-link" href="{{ url_for('openLogin') }}">Admin Management <span class="sr-only"></span></a>
                 </li>
 
             </ul>

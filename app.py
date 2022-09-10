@@ -9,7 +9,7 @@ import face_recognition
 import datetime
 app = Flask(__name__)
 
-app.config['IMAGE_UPLOADS'] = 'C:\\Users\\MXGC\\PycharmProjects\\Face-and-Card-Recognition---ISYS2101\\static\\image'
+app.config['IMAGE_UPLOADS'] = 'C:\\Face-and-Card-Recognition---ISYS2101\\static\\image'
 
 @app.route("/")
 def homepage():
@@ -22,30 +22,17 @@ def backfaceID():
 @app.route("/homepage", methods=['POST', "GET"])
 def returnHomepage():
     return render_template("homepage.html")
-#create admin log in
-app.secret_key = 'hihihaha'
-
-user = {"username": "admin", "password": "admin"}
 
 @app.route('/openlogin', methods=['POST', "GET"])
 def openLogin():
-    if (request.method == 'POST'):
-        username = request.form.get('username')
-        password = request.form.get('password')
-        if username == user['username'] and password == user['password']:
-            session['user'] = username
-            return redirect('/adminAuth')
-
-        return "<h1>Wrong username or password</h1>"
-
     return render_template("LogInLogOut.html")
 
-
-@app.route('/adminAuth')
+@app.route('/adminAuth', methods=['POST', "GET"])
 def adminAuth():
-    if ('user' in session and session['user'] == user['username']):
+    username = request.form['username']
+    password = request.form['password']
+    if username == "admin" and password == "admin":
         return render_template("adminAuthentication.html")
-
     return '<h1>You are not logged in.</h1>'
 
 @app.route('/successValidation', methods=['POST', "GET"])
