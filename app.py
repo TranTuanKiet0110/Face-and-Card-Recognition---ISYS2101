@@ -34,9 +34,11 @@ def adminAuth():
     password = request.form['password']
     if username == "admin" and password == "admin":
         filename = ""
+        dateList = []
         for file in os.listdir("C:\Face-and-Card-Recognition---ISYS2101\log"):
             filename = file
-        print(filename)
+            dateList.append(str(filename).replace(".txt", ''))
+        latest = str(filename).replace(".txt", '')
         output = ""
         with open("log/" + str(filename), "r+") as file:
             for line in file:
@@ -52,8 +54,34 @@ def adminAuth():
             entry = tuple(x.strip() for x in info.split(','))
             list.append(entry)
         entry = tuple(list)
-        return render_template("adminAuthentication.html", column_names=['Student number', 'Student name', 'Time'], entry=entry)
+        return render_template("adminAuthentication.html", latest=latest, column_names=['Student number', 'Student name', 'Time'], entry=entry, dateList=dateList)
     return '<h1>You are not logged in.</h1>'
+
+@app.route('/viewEntry', methods=['POST', "GET"])
+def chooseDate():
+    dateList = []
+    selectedDate = request.form['date']
+    filename = ""
+    for file in os.listdir("C:\Face-and-Card-Recognition---ISYS2101\log"):
+        filename = file
+        dateList.append(str(filename).replace(".txt", ''))
+    output = ""
+    with open("log/" + str(selectedDate) + ".txt", "r+") as file:
+        for line in file:
+            if not line.isspace():
+                output += line
+    file.close()
+    with open("log/" + str(selectedDate) + ".txt", "w") as file:
+        file.writelines(output)
+    file.close()
+    infos = open("log/" + str(selectedDate) + ".txt").readlines()
+    list = []
+    for info in infos:
+        entry = tuple(x.strip() for x in info.split(','))
+        list.append(entry)
+    entry = tuple(list)
+    return render_template("adminAuthentication.html", column_names=['Student number', 'Student name', 'Time'],
+                           entry=entry, latest=selectedDate, dateList=dateList)
 
 @app.route('/successValidation', methods=['POST', "GET"])
 def confirmLogin():

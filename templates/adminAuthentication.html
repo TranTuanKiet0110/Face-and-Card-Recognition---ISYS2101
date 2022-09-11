@@ -39,7 +39,22 @@
         </div>
     </nav>
     <div class="adminName">
-        Admin label
+        <div>
+            Admin label
+        </div>
+        <div>
+            <form action="{{ url_for('chooseDate') }}" method="post" enctype="multipart/form-data">
+                <label>Change date:</label>
+                <select name="date" id="date">
+                    <option selected="selected" value="latest">{{latest}}</option>
+                    {% for option in dateList %}
+                        <option value="{{option}}">{{option}}</option>
+                    {% endfor %}
+                </select>
+                <br><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
     </div>
 
     <table id="customers" class="tableDesign">
@@ -51,7 +66,7 @@
         {% for row in entry %}
         <tr>
             {% for cell in row%}
-                <td>{{cell}}</td>
+            <td>{{cell}}</td>
             {% endfor %}
         </tr>
         {% endfor %}
