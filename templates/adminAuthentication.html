@@ -27,10 +27,12 @@
                     <a class="nav-link" href="{{ url_for('openScan') }}">Face ID <span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('openRegister') }}">Register An Account <span class="sr-only"></span></a>
+                    <a class="nav-link" href="{{ url_for('openRegister') }}">Register An Account <span
+                            class="sr-only"></span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('openLogin') }}">Admin Management <span class="sr-only"></span></a>
+                    <a class="nav-link" href="{{ url_for('openLogin') }}">Admin Management <span
+                            class="sr-only"></span></a>
                 </li>
 
             </ul>
@@ -42,20 +44,17 @@
 
     <table id="customers" class="tableDesign">
         <tr>
-            <th>Student Name</th>
-            <th>Student Number</th>
-            <th>Validation Date</th>
+            {% for subfield in column_names %}
+            <th>{{subfield}}</th>
+            {% endfor %}
         </tr>
+        {% for row in entry %}
         <tr>
-            <td>Pham Viet Hoang</td>
-            <td>s3891455</td>
-            <td>10 September 2022</td>
+            {% for cell in row%}
+                <td>{{cell}}</td>
+            {% endfor %}
         </tr>
-        <tr>
-            <td>Tran Tuan Kiet</td>
-            <td>s3891667</td>
-            <td>12 December 2022</td>
-        </tr>
+        {% endfor %}
     </table>
 
 

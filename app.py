@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, Response, session
+from flask import Flask, render_template, request, redirect, Response
 import os
 import pytesseract
 from PIL import Image
@@ -7,6 +7,7 @@ import cv2.cv2 as cv2
 import numpy as np
 import face_recognition
 import datetime
+
 app = Flask(__name__)
 
 app.config['IMAGE_UPLOADS'] = 'C:\\Face-and-Card-Recognition---ISYS2101\\static\\image'
@@ -32,7 +33,23 @@ def adminAuth():
     username = request.form['username']
     password = request.form['password']
     if username == "admin" and password == "admin":
-        return render_template("adminAuthentication.html")
+        output = ""
+        with open("log/recordAttendance 2022-09-11.txt", "r+") as file:
+            for line in file:
+                if not line.isspace():
+                    output += line
+        file.close()
+        with open("log/recordAttendance 2022-09-10.txt", "w") as file:
+            file.writelines(output)
+        file.close()
+        infos = open("log/recordAttendance 2022-09-10.txt").readlines()
+        list = []
+        for info in infos:
+            entry = tuple(x.strip() for x in info.split(','))
+            list.append(entry)
+        print(list)
+        entry = tuple(list)
+        return render_template("adminAuthentication.html", column_names=['Student number', 'Student name', 'Time'], entry=entry)
     return '<h1>You are not logged in.</h1>'
 
 @app.route('/successValidation', methods=['POST', "GET"])
