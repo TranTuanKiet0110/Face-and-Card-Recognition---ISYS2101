@@ -33,21 +33,24 @@ def adminAuth():
     username = request.form['username']
     password = request.form['password']
     if username == "admin" and password == "admin":
+        filename = ""
+        for file in os.listdir("C:\Face-and-Card-Recognition---ISYS2101\log"):
+            filename = file
+        print(filename)
         output = ""
-        with open("log/recordAttendance 2022-09-11.txt", "r+") as file:
+        with open("log/" + str(filename), "r+") as file:
             for line in file:
                 if not line.isspace():
                     output += line
         file.close()
-        with open("log/recordAttendance 2022-09-10.txt", "w") as file:
+        with open("log/" + str(filename), "w") as file:
             file.writelines(output)
         file.close()
-        infos = open("log/recordAttendance 2022-09-10.txt").readlines()
+        infos = open("log/" + str(filename)).readlines()
         list = []
         for info in infos:
             entry = tuple(x.strip() for x in info.split(','))
             list.append(entry)
-        print(list)
         entry = tuple(list)
         return render_template("adminAuthentication.html", column_names=['Student number', 'Student name', 'Time'], entry=entry)
     return '<h1>You are not logged in.</h1>'
@@ -97,7 +100,6 @@ def gen():
     for name in classNames:
         res = re.sub('..$', "", name)  # delete numeric characters in image name
         getName.append(res)  # append to getName list
-    print(getName)
 
     """function to encode all of the images in images list"""
 
@@ -159,24 +161,12 @@ def gen():
                         file.writelines(f"{str(current_name[0])}")
                     file.close()
                     today = datetime.date.today()
-                    log = os.path.join('log', 'recordAttendance ' + str(today) + '.txt')
+                    log = os.path.join('log', str(today) + '.txt')
                     with open(log, 'a+') as file:
                         now = datetime.datetime.now()
                         dtString = now.strftime('%H:%M:%S')
                         file.writelines(f"\n{str(sid)},{str(sname)},{str(dtString)}")
                     file.close()
-
-                    # output = ""
-                    # with open("currentLog.txt", "r+") as file:
-                    #     for line in file:
-                    #         if not line.isspace():
-                    #             output += line
-                    # file.close()
-                    # today = datetime.date.today()
-                    # log = os.path.join('log', 'recordAttendance ' + str(today) + '.txt')
-                    # with open(log, "a+") as file:
-                    #     file.writelines(output)
-                    # file.close()
         if not ret:
             print("Error: failed to capture image")
             break
