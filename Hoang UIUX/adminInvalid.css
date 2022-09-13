@@ -1,0 +1,37 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #eee;
+}
+.imageBox{
+    width: 200px;
+    margin: auto;
+    margin-top: 200px;
+}
+.image{
+    width: 200px;
+}
+
+.text{
+    color: red;
+    width: 500px;
+    margin: auto;
+}
+
+.buttonHomepage{
+    width: 200px;
+    margin: auto;
+    margin-top: 100px;
+    border: 1px solid rgb(187, 187, 187);
+    text-align: center;
+    padding: 10px;
+    border-radius:10px;
+    background-color: red;
+    color: #eee;
+}
+.buttonHomepage:hover{
+    box-shadow: 1px 5px 1px 2px rgb(211, 211, 211);
+}
