@@ -199,10 +199,10 @@ def gen():
             print("Error: failed to capture image")
             break
 
-        cv2.imwrite('demo.jpg', frame)
+        cv2.imwrite('capture.jpg', frame)
         cv2.waitKey(1)
         yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + open('demo.jpg', 'rb').read() + b'\r\n')
+               b'Content-Type: image/jpeg\r\n\r\n' + open('capture.jpg', 'rb').read() + b'\r\n')
 
 @app.route('/video_feed')
 def video_feed():

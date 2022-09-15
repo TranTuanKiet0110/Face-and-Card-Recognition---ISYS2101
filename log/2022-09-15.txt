@@ -48,3 +48,5 @@ s3879300,Tran Tuan Kiet,10:30:02
 s3879300,Tran Tuan Kiet,10:30:26
 s3879300,Tran Tuan Kiet,10:30:41
 s3879300,Tran Tuan Kiet,10:31:02
+s3879300,Tran Tuan Kiet,10:38:18
+s3879300,Tran Tuan Kiet,10:39:02
