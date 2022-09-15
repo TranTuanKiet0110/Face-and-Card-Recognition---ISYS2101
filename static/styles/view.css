@@ -28,18 +28,19 @@ body{
 .inputBox{
     margin-bottom: 20px;
 }
-.buttonBox{
-    width: 400px;
+.buttonBox {
+    width: 115px;
     margin: auto;
-    margin-top: 30px;
+    margin-top: 40px;
     display: flex;
 }
 .button1{
 background-color: #fff;
-margin-left: 60px;
+margin: 0;
 padding: 10px;
 border: 1px solid grey;
 border-radius: 10px;
+align-items: center;
 }
 .button1:hover{
     background-color: #eee;

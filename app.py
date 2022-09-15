@@ -55,7 +55,7 @@ def adminAuth():
             list.append(entry)
         entry = tuple(list)
         return render_template("adminAuthentication.html", latest=latest, column_names=['Student number', 'Student name', 'Time'], entry=entry, dateList=dateList)
-    return '<h1>You are not logged in.</h1>'
+    return render_template("adminInvalid.html")
 
 @app.route('/viewEntry', methods=['POST', "GET"])
 def chooseDate():
@@ -527,7 +527,7 @@ def uploadImage():
             with open(user_info, 'w') as file:
                 file.writelines(f'{str(school)}\n{str(sname)}\n{str(sid)}\n{str(exdate)}')
         else:
-            return render_template("uploadID.html")
+            return render_template("invalidSchool.html")
         return render_template("verifySuccessful.html")
 
 if __name__ == '__main__':
