@@ -103,6 +103,13 @@ def confirmLogin():
         sid = infoDataList[2]
         exdate = infoDataList[3]
     file.close()
+    today = datetime.date.today()
+    log = os.path.join('log', str(today) + '.txt')
+    with open(log, 'a+') as file:
+        now = datetime.datetime.now()
+        dtString = now.strftime('%H:%M:%S')
+        file.writelines(f"\n{str(sid)},{str(sname)},{str(dtString)}")
+    file.close()
     return render_template("successValidation.html", school=school, sname=sname, sid=sid, exdate=exdate)
 
 @app.route('/faceScan')
@@ -187,13 +194,6 @@ def gen():
                     file.close()
                     with open('current_name.txt', 'w') as file:
                         file.writelines(f"{str(current_name[0])}")
-                    file.close()
-                    today = datetime.date.today()
-                    log = os.path.join('log', str(today) + '.txt')
-                    with open(log, 'a+') as file:
-                        now = datetime.datetime.now()
-                        dtString = now.strftime('%H:%M:%S')
-                        file.writelines(f"\n{str(sid)},{str(sname)},{str(dtString)}")
                     file.close()
         if not ret:
             print("Error: failed to capture image")
